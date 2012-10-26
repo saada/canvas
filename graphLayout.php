@@ -38,7 +38,6 @@
 	<div class="row">
 		<select id="graphList">
     	</select>​
-    	random text
 	</div>
 </div>
 
