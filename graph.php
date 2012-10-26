@@ -279,7 +279,7 @@
 									data: {action : "addGraph", name: name, xml: xml},
 									dataType: "json",
 									success:function(){
-										alert("success");
+										alert("<b>Successfully</b> added "+name);
 										jQuery("#graphList", top.document).append('<option value="'+name+'">'+name+'</option>');
 									},
 									error:function(xhr,opt,e){

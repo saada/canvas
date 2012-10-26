@@ -1,13 +1,6 @@
 
 <?php
-	//Require the ActiveRecord class
-	require_once 'ActiveRecord/php-activerecord/ActiveRecord.php';
-	
-	//Set the database configuration and connection
-	include('ActiveRecord/Configuration.php');
-	
-	//Include models
-	include('ActiveRecord/models/GraphModel.php');
+
 
 	//display in order
 	showWelcomeMessage();
