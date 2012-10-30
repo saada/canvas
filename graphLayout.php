@@ -1,7 +1,5 @@
 
 <?php
-
-
 	//display in order
 	showWelcomeMessage();
 	showGraph("100%","80%");
