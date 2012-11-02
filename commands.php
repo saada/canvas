@@ -29,7 +29,7 @@
 	//Include models
 	include('ActiveRecord/models/GraphModel.php');
 
-	protected function addGraph(name, xml)
+	function addGraph(name, xml)
 	{
 		return Graph::create(array('name'=>,'content'=>));
 	}
