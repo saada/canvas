@@ -27,6 +27,6 @@
 	        	break;
 	        }
 	    }
-		return "Error: Could not execute your request!";
 	}
+	return false;
 ?>
