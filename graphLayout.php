@@ -50,9 +50,12 @@
 	function addGraph($name, $xml)
 	{	
 		$result = Graph::create(array('name'=>$name,'content'=>$xml));
-		echo json_encode($result);
-		return $result;
+		echo json_encode($result->attributes);
+		return $result->attributes;
 	}
-
+?>
+<pre>
+<?php
 	print_r(addGraph("Jin", "Hui"));
  ?>
+</pre>
