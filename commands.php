@@ -1,5 +1,18 @@
 <?php 
-	// echo "HELLO!";exit();
+	//Require the ActiveRecord class
+	require_once 'ActiveRecord/php-activerecord/ActiveRecord.php';
+	
+	//Set the database configuration and connection
+	include('ActiveRecord/Configuration.php');
+	
+	//Include models
+	include('ActiveRecord/models/GraphModel.php');
+
+	function addGraph($name, $xml)
+	{
+		return Graph::create(array('name'=>$name,'content'=>$xml));
+	}
+
 	if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])) {
 	    $action = $_REQUEST['action'];
 	    switch($action) {
@@ -15,19 +28,5 @@
 	        }
 	    }
 		return "Error: Could not execute your request!";
-	}
-
-	//Require the ActiveRecord class
-	require_once 'ActiveRecord/php-activerecord/ActiveRecord.php';
-	
-	//Set the database configuration and connection
-	include('ActiveRecord/Configuration.php');
-	
-	//Include models
-	include('ActiveRecord/models/GraphModel.php');
-
-	function addGraph($name, $xml)
-	{
-		return Graph::create(array('name'=>$name,'content'=>$xml));
 	}
 ?>
