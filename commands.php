@@ -17,17 +17,17 @@
 	}
 	return "Error: Could not execute your request!";
 
-	// //Require the ActiveRecord class
-	// require_once 'ActiveRecord/php-activerecord/ActiveRecord.php';
+	//Require the ActiveRecord class
+	require_once 'ActiveRecord/php-activerecord/ActiveRecord.php';
 	
-	// //Set the database configuration and connection
-	// include('ActiveRecord/Configuration.php');
+	//Set the database configuration and connection
+	include('ActiveRecord/Configuration.php');
 	
-	// //Include models
-	// include('ActiveRecord/models/GraphModel.php');
+	//Include models
+	include('ActiveRecord/models/GraphModel.php');
 
-	// function addGraph(name, xml)
-	// {
-	// 	return Graph::create(array('name'=>,'content'=>));
-	// }
+	function addGraph(name, xml)
+	{
+		return Graph::create(array('name'=>,'content'=>));
+	}
 ?>
