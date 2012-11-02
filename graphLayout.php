@@ -54,5 +54,5 @@
 		return $result->gid;
 	}
 
-	// print_r(addGraph("Jin", "Hui")->gid);
+	print_r(addGraph("Jin", "Hui")->gid);
  ?>
