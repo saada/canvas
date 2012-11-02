@@ -9,8 +9,10 @@
 	include('ActiveRecord/models/GraphModel.php');
 
 	function addGraph($name, $xml)
-	{
-		return Graph::create(array('name'=>$name,'content'=>$xml));
+	{	
+		$result = Graph::create(array('name'=>$name,'content'=>$xml));
+		echo json_encode($result);
+		return $result;
 	}
 
 	if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])) {

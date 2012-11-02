@@ -278,8 +278,8 @@
 									type: "POST",
 									data: {action : "addGraph", name: name, xml: xml},
 									dataType: "json",
-									success:function(){
-										alert("<b>Successfully</b> added "+name);
+									success:function(result){
+										alert("Successfully added graph: "+name+". Id="+result.gid);
 										jQuery("#graphList", top.document).append('<option value="'+name+'">'+name+'</option>');
 									},
 									error:function(xhr,opt,e){
