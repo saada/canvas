@@ -6,7 +6,7 @@
 	        case 'addGraph' :
 	        {
 	        	if(isset($_REQUEST['name']) && !empty($_REQUEST['name'])
-	        		&& isset($_REQUEST['xml']) && !empty($_REQUEST['xml'])
+	        		&& isset($_REQUEST['xml']) && !empty($_REQUEST['xml']))
         		{
         			if(addGraph($_REQUEST['name'],$_REQUEST['xml']) != null)
         				return true;
