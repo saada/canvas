@@ -14,8 +14,8 @@
 	        	break;
 	        }
 	    }
+		return "Error: Could not execute your request!";
 	}
-	return "Error: Could not execute your request!";
 
 	//Require the ActiveRecord class
 	require_once 'ActiveRecord/php-activerecord/ActiveRecord.php';
@@ -26,7 +26,7 @@
 	//Include models
 	include('ActiveRecord/models/GraphModel.php');
 
-	function addGraph(name, xml)
+	function addGraph($name, $xml)
 	{
 		return Graph::create(array('name'=>$name,'content'=>$xml));
 	}
