@@ -8,8 +8,8 @@
 	        	if(isset($_REQUEST['name']) && !empty($_REQUEST['name'])
 	        		&& isset($_REQUEST['xml']) && !empty($_REQUEST['xml']))
         		{
-        			// if(addGraph($_REQUEST['name'],$_REQUEST['xml']) != null)
-        			// 	return true;
+        			if(addGraph($_REQUEST['name'],$_REQUEST['xml']) != null)
+        				return true;
         		}
 	        	break;
 	        }
@@ -28,6 +28,6 @@
 
 	function addGraph(name, xml)
 	{
-		return Graph::create(array('name'=>,'content'=>));
+		return Graph::create(array('name'=>$name,'content'=>$xml));
 	}
 ?>
