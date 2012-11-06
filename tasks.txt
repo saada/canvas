@@ -1,0 +1,3 @@
+1) Column that shows all the labs the student is enrolled in on the left hand side of the canvas.
+2) Also show the graphs that are within the selected lab
+3) Components can only attach to a SWITCH (VLAN).

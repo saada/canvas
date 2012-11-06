@@ -522,6 +522,18 @@
 			var nameField = form.addText('Name', cell.value.name);
 			var typeField = form.addText('Type', cell.value.type);
 			var interfaceField = form.addText('interface',cell.value.interface);
+
+			// Show interfaces and their edge terminals
+			var edgeCount = cell.getEdgeCount();
+			var edgeFields = [];
+
+			for (var i = 0; i < edgeCount; i++) {
+				var edge = cell.getEdgeAt(i);
+				var terminal = edge.getTerminal();
+				if(terminal != null && terminal.id != cell.id)
+					edgeFields.push(form.addText("IP to: "+terminal.value.name, "192.168.0.1"));
+			};
+
 			var wnd = null;
 			// Defines the function to be executed when the
 			// OK button is pressed in the dialog
@@ -573,9 +585,33 @@
 						return false;
 					}
 				}
-				i++
+				i++;
 			}
 			return true;			
+		}
+
+		function printAllCells(graph)
+		{
+			var i = 0;
+			//var isCell = true;
+			var cell = new mxCell();
+
+			while(true)
+			{
+				cell = graph.getModel().getCell(i);	
+				if(cell==null)
+				{
+					break;
+				}else
+				{
+					console.log("Cell: "+cell.id);
+					console.log(cell);
+					console.log("Edge count: "+graph.getModel().getEdgeCount(cell));
+					if(cell.value != null)
+						console.log("Type: "+ cell.value.type);
+				}
+				i++;
+			}
 		}
 		
 		function isSwitchConnected(graph)
@@ -623,6 +659,9 @@
 			var dec = new mxCodec(doc);
 			dec.decode(doc,graph.getModel());
 			graph.getModel().endUpdate();
+
+			//debugging calls
+			printAllCells(graph);
 		};
 		
 		Client.prototype.type = null;
