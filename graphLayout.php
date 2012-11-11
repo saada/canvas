@@ -30,31 +30,3 @@
     	</select>​
 	</div>
 </div>
-
-<script type="text/javascript">
-	function loadGraphs(){
-		jQuery.ajax({
-			url: "/canvas/canvas/commands.php",
-			type: "POST",
-			data: {action : "getAllGraphs"},
-			dataType: "json",
-			success:function(result){
-				console.log("===DEBUG=== loadGraphs()");
-				console.log(result);
-
-				//populate dropdownlist
-				jQuery.each(result, function(k, v){
-		            jQuery("#graphList").append(
-		            	'<option value="'+v.gid+'">'+v.name+'</option>');
-		        });
-			},
-			error:function(xhr,opt,e){
-				alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
-			}
-		});
-	}
-
-	jQuery(document).ready(function(){
-		loadGraphs();
-	});
-</script>

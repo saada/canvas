@@ -36,6 +36,13 @@
    			'except' => array('create_time','update_time')));
 	}
 
+	function getGraphById($gid)
+	{	
+		$result = Graph::find_by_gid($gid);
+		return $result->to_json(array(
+   			'except' => array('create_time','update_time')));
+	}
+
 	function getAllGraphs()
 	{	
 		return arToJson(Graph::all(),
@@ -67,6 +74,20 @@
 	        	if(isset($_REQUEST['name']) && !empty($_REQUEST['name']))
         		{
         			$returnValue = getGraph($_REQUEST['name']);
+        			if($returnValue != null)
+        			{
+        				echo $returnValue;
+        				exit;
+        			}
+        		}
+	        	break;
+	        }
+
+	        case 'getGraphById' :
+	        {
+	        	if(isset($_REQUEST['gid']) && !empty($_REQUEST['gid']))
+        		{
+        			$returnValue = getGraphById($_REQUEST['gid']);
         			if($returnValue != null)
         			{
         				echo $returnValue;

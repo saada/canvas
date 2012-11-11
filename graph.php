@@ -40,7 +40,7 @@
 		// Program starts here. Creates a sample graph in the
 		// DOM node with the specified ID. This function is invoked
 		// from the onLoad event handler of the document (see below).
-		
+		var globalGraph = null;
 		function main(container, toolbar, sidebar, status)
 		{
 			
@@ -69,7 +69,7 @@
 				// graph, such as the rubberband selection, but most parts
 				// of the UI are custom in this example.
 				var editor = new mxEditor();
-				var graph = editor.graph;
+				var graph = editor.graph; globalGraph = graph;
 				var model = graph.getModel();
 
 				// Hook to return the mxImage used for the connection icon				
@@ -369,7 +369,7 @@
 				}
 
 				//Initialize with default graph
-				initLoad(graph);
+				initLoad(graph, null);
 			}
 		};
 		
@@ -538,7 +538,7 @@
 					{
 						edgeFields.push(
 						{
-							vlan:form.addText("VLAN to "+terminal.value.name, "VLAN1")
+							vlan:form.addText("VLAN to "+terminal.value.name, "VLAN"+i)
 						});
 					}
 				}
@@ -682,12 +682,15 @@
 			}
 		}
 
-		function initLoad(graph)
+		function initLoad(graph, xml)
 		{
 			if(typeof(graph) != 'undefined')
 			{
 				graph.getModel().beginUpdate();
-				var doc = mxUtils.parseXml(getGraph('<?php echo $_GET["lab_id"]; ?>'));
+				if(xml == null)
+					var doc = mxUtils.parseXml(getGraph('<?php echo $_GET["lab_id"]; ?>'));
+				else
+					var doc = mxUtils.parseXml(xml);
 				// alert(getGraph('<?php echo $_GET["lab_id"]; ?>'));
 				var dec = new mxCodec(doc);
 				dec.decode(doc.documentElement, graph.getModel());
@@ -845,3 +848,14 @@
 
 </body>
 </html>
+
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		loadGraphs();
+
+		jQuery('#graphList',top.document).change(function() {
+			// alert(jQuery(this).val());
+			initLoad(globalGraph, getGraphById(jQuery(this).val()));
+		});
+	});
+</script>
