@@ -280,8 +280,6 @@
 						var okFunction = function()
 						{	
 							// mxUtils.save('\\<?php echo $_GET["lab_id"] . ".xml"; ?>.xml',xmlfield.value);
-
-							
 							addGraph(gName.value,xmlfield.value);
 
 							wnd.destroy();

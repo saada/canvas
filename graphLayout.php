@@ -1,4 +1,3 @@
-
 <?php
 	//display in order
 	showWelcomeMessage();
@@ -34,5 +33,11 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function(){
+		// $.each(JSON.parse(jsonstring), function(k, v){
+  //           var o = new Option();
+  //           var newTitle =decodeURIComponent(v.title);
+  //           $(o).html(newTitle).val(v.id);
+  //           $("select").append(o); 
+  //       });
 	});
 </script>
