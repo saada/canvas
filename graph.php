@@ -640,7 +640,7 @@
 					break;
 				}else
 				{
-					console.log("Cell: "+cell.id);
+					console.log("===DEBUG=== Cell: "+cell.id);
 					console.log(cell);
 					console.log("Edge count: "+graph.getModel().getEdgeCount(cell));
 					if(cell.value != null)

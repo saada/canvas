@@ -6,6 +6,7 @@ function addGraph(name, xml)
 		data: {action : "addGraph", name: name, xml: xml},
 		dataType: "json",
 		success:function(result){
+			console.log("===DEBUG=== addGraph()");
 			console.log(result);
 			alert("Successfully added graph: "+result.name+". Id="+result.gid);
 			jQuery("#graphList", top.document).append('<option value="'+result.gid+'">'+result.name+'</option>');
