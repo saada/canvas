@@ -36,23 +36,3 @@
 	jQuery(document).ready(function(){
 	});
 </script>
-
-<?php 
-	//Require the ActiveRecord class
-	require_once 'ActiveRecord/php-activerecord/ActiveRecord.php';
-	
-	//Set the database configuration and connection
-	include('ActiveRecord/Configuration.php');
-	
-	//Include models
-	include('ActiveRecord/models/GraphModel.php');
-
-	function addGraph($name, $xml)
-	{	
-		$result = Graph::create(array('name'=>$name,'content'=>$xml));
-		echo json_encode($result->gid);
-		return $result->gid;
-	}
-
-	// print_r(addGraph("Jin", "Hui")->gid);
- ?>

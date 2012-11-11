@@ -23,6 +23,9 @@
 		
 	<!-- include jQuery -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	
+	<!-- Include ajax commands -->
+	<script src="commands.js"></script>
 
 	<!-- Sets the basepath for the library if not in same directory -->
 	<script type="text/javascript">
@@ -80,7 +83,7 @@
 
 				// Sets the graph container and configures the editor
 				editor.setGraphContainer(container);
-				
+
 				//graph.ingnoreScrollbars = true;
 				
 				var config = mxUtils.load(
@@ -115,12 +118,19 @@
 				// Enables new connections
 				graph.setConnectable(true);
 
+				//Prevent and validate edge connections
+				graph.addEdge = function(edge, parent, source, target, index){
+				    if(source.value.type != 'Switch' && target.value.type == 'Switch')
+				    	return mxGraph.prototype.addEdge.apply(this, arguments); // "supercall"
+				    return null;
+				};
+
 				// Adds all required styles to the graph (see below)
 				configureStylesheet(graph);
 				
 				// Adds sidebar icon.
 				var ClientObject = new Client('myClient');
-				var client = new mxCell(ClientObject,new mxGeometry(0,0,80,80));
+				var client = new mxCell(ClientObject,new mxGeometry(0,0,150,150));
 				client.setVertex(true);
 				client.setConnectable(true);
 				
@@ -131,7 +141,7 @@
 				
 				// Adds sidebar icon.
 				var InternetObject = new Internet('myInternet');
-				var internet = new mxCell(InternetObject,new mxGeometry(0,0,80,80));
+				var internet = new mxCell(InternetObject,new mxGeometry(0,0,150,150));
 				internet.setVertex(true);
 				internet.setConnectable(true);
 				
@@ -142,7 +152,7 @@
 				
 				// Adds sidebar icon.
 				var RouterObject = new Router('myRouter');
-				var router = new mxCell(RouterObject,new mxGeometry(0,0,80,80));
+				var router = new mxCell(RouterObject,new mxGeometry(0,0,150,150));
 				router.setVertex(true);
 				router.setConnectable(true);
 				
@@ -153,7 +163,7 @@
 	
 				//Adds sidebar icon
 				var ServerObject = new Server('myServer');
-				var server= new mxCell(ServerObject,new mxGeometry(0,0,80,80));
+				var server= new mxCell(ServerObject,new mxGeometry(0,0,150,150));
 				server.setVertex(true);
 				server.setConnectable(true);
 				
@@ -164,7 +174,7 @@
 							
 				//Adds sidebar icon
 				var SwitchObject = new Switch('mySwitch');
-				var sw= new mxCell(SwitchObject,new mxGeometry(0,0,80,80));
+				var sw= new mxCell(SwitchObject,new mxGeometry(0,0,150,150));
 				sw.setVertex(true);
 				sw.setConnectable(true);
 				
@@ -271,22 +281,7 @@
 						{	
 							// mxUtils.save('\\<?php echo $_GET["lab_id"] . ".xml"; ?>.xml',xmlfield.value);
 
-							function addGraph(name, xml)
-							{
-								jQuery.ajax({
-									url: "/canvas/canvas/commands.php",
-									type: "POST",
-									data: {action : "addGraph", name: name, xml: xml},
-									dataType: "json",
-									success:function(result){
-										alert("Successfully added graph: "+name+". Id="+result);
-										jQuery("#graphList", top.document).append('<option value="'+name+'">'+name+'</option>');
-									},
-									error:function(xhr,opt,e){
-   										 alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
-									}
-								});
-							}
+							
 							addGraph(gName.value,xmlfield.value);
 
 							wnd.destroy();
@@ -515,6 +510,7 @@
 			// Creates a form for the user object inside
 			// the cell
 			var form = new mxForm('configure');
+			var edgeFields = [];
 
 			if(graph.getModel().isVertex(cell)){
 			// Adds a field for the columnname	
@@ -525,13 +521,29 @@
 
 			// Show interfaces and their edge terminals
 			var edgeCount = cell.getEdgeCount();
-			var edgeFields = [];
 
 			for (var i = 0; i < edgeCount; i++) {
 				var edge = cell.getEdgeAt(i);
 				var terminal = edge.getTerminal();
+				var source = edge.getTerminal(true);
 				if(terminal != null && terminal.id != cell.id)
-					edgeFields.push(form.addText("IP to: "+terminal.value.name, "192.168.0.1"));
+				{
+					if(cell.value.type == 'Client')
+						edgeFields.push(
+						{
+							interfaceId:form.addText("InterfaceId to "+terminal.value.name, "eth0"),
+							ip:form.addText("IP address to "+terminal.value.name, "192.168.0.1"),
+							netmask:form.addText("Netmask to "+terminal.value.name, "255.255.255.0"),
+							gateway:form.addText("Gateway to "+terminal.value.name, "192.168.1.1")
+						});
+					else if (cell.value.type == 'Switch')
+					{
+						edgeFields.push(
+						{
+							vlan:form.addText("VLAN to "+terminal.value.name, "VLAN1")
+						});
+					}
+				}
 			};
 
 			var wnd = null;
@@ -543,11 +555,36 @@
 				
 				clone.name = nameField.value;
 				clone.type = typeField.value;
-				clone.ip = ipField.value;
+				// clone.ip = ipField.value;
 				clone.interface = interfaceField.value;
 				  //clone.id = id.value;
+				clone.label = '<img src="images/icons48/'+clone.type.toLowerCase()+'.png" width="48" height="48"><br>'+
+								 '<h1 style="margin:0px;">'+clone.name+'</h1>';
+				clone.edgeFields = [];
 
+				function Interface(interfaceId, ip, netmask, gateway){
+					this.interfaceId = interfaceId;
+					this.ip = ip;
+					this.netmask = netmask;
+					this.gateway = gateway;
+				};
+
+				for (var i = 0; i < edgeFields.length; i++) {
+					// console.log(new Interface(edgeFields[i].interfaceId.value, 
+					// 					edgeFields[i].ip.value,
+					// 					edgeFields[i].netmask.value,
+					// 					edgeFields[i].gateway.value));
+					var tmp = new Interface(edgeFields[i].interfaceId.value, 
+										edgeFields[i].ip.value,
+										edgeFields[i].netmask.value,
+										edgeFields[i].gateway.value);
+					clone.edgeFields.push(tmp);
+				};
+
+				graph.model.beginUpdate();
 				graph.model.setValue(cell, clone);
+				graph.model.endUpdate();
+				printAllCells(graph);
 				wnd.destroy();}
 			var cancelFunction = function()
 			{
@@ -563,7 +600,7 @@
 				var targetName = form.addText('TargetName', cell.getTerminal().value.name);
 				var targetInterface = form.addText('TargetInterface', cell.getTerminal().value.interface);
 			}
-			wnd = showModalWindow(graph,name,form.table, 240, 240);
+			wnd = showModalWindow(graph,name,form.table, 300, 200+80*edgeFields.length);
 		};
 		
 		//check whether all icons are connected
@@ -590,6 +627,7 @@
 			return true;			
 		}
 
+		//Console debugging: print all cells
 		function printAllCells(graph)
 		{
 			var i = 0;
@@ -645,23 +683,30 @@
 				return true;
 			}
 		}
+
+		function initLoad(graph)
+		{
+			if(typeof(graph) != 'undefined')
+			{
+				graph.getModel().beginUpdate();
+				var doc = mxUtils.parseXml(getGraph('<?php echo $_GET["lab_id"]; ?>'));
+				// alert(getGraph('<?php echo $_GET["lab_id"]; ?>'));
+				var dec = new mxCodec(doc);
+				dec.decode(doc.documentElement, graph.getModel());
+				graph.getModel().endUpdate();
+			
+				//debugging calls
+				printAllCells(graph);
+			}
+		};
 		
 		// Defines the client object
 		function Client(name)
 		{
 			this.name = name;
-		};
-
-		function initLoad(graph)
-		{
-			var xml = mxUtils.load('myfile/<?php echo $_GET["lab_id"] . ".xml"; ?>');
-			var doc = xml.getDocumentElement();
-			var dec = new mxCodec(doc);
-			dec.decode(doc,graph.getModel());
-			graph.getModel().endUpdate();
-
-			//debugging calls
-			printAllCells(graph);
+			if(typeof(name) != 'undefined')
+				this.label = '<img src="images/icons48/client.png" width="48" height="48"><br>'+
+								 '<h1 style="margin:0px;">'+name+'</h1>';
 		};
 		
 		Client.prototype.type = null;
@@ -672,6 +717,8 @@
 		
 		Client.prototype.label = '<img src="images/icons48/client.png" width="48" height="48"><br>'+
 								 '<h1 style="margin:0px;">Client</h1>';
+
+		Client.prototype.edgeFields = [];
 		
 		Client.prototype.clone = function()
 		{
@@ -682,6 +729,9 @@
 		function Internet(name)
 		{
 			this.name = name;
+			if(typeof(name) != 'undefined')
+				this.label = '<img src="images/icons48/internet.png" width="48" height="48">'+
+								 '<h1 style="margin:0px;">'+name+'</h1>';
 		};
 		
 		Internet.prototype.type = null;
@@ -702,6 +752,9 @@
 		function Router(name)
 		{
 			this.name = name;
+			if(typeof(name) != 'undefined')
+				this.label = '<img src="images/icons48/router.png" width="48" height="48">'+
+								 '<h1 style="margin:0px;">'+name+'</h1>';
 		}
 		
 		Router.prototype.type = null;
@@ -721,6 +774,9 @@
 		function Server(name)
 		{
 			this.name = name;
+			if(typeof(name) != 'undefined')
+				this.label = '<img src="images/icons48/server.png" width="48" height="48">'+
+								 '<h1 style="margin:0px;">'+name+'</h1>';
 		}
 		
 		Server.prototype.type = null;
@@ -740,6 +796,9 @@
 		function Switch(name)
 		{
 			this.name = name;
+			if(typeof(name) != 'undefined')
+				this.label = '<img src="images/icons48/switch.png" width="48" height="48">'+
+								 '<h1 style="margin:0px;">'+name+'</h1>';
 		}
 		
 		Switch.prototype.type = null;
