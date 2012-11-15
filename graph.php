@@ -8,7 +8,7 @@
 -->
 <html>
 <head>
-	<title>Ports example</title>
+	<title>Graph Canvas</title>
 	<style type="text/css" media="screen">
 		BODY {
 			font-family: Arial;
@@ -21,12 +21,6 @@
 		}
 	</style>
 		
-	<!-- include jQuery -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	
-	<!-- Include ajax commands -->
-	<script src="commands.js"></script>
-
 	<!-- Sets the basepath for the library if not in same directory -->
 	<script type="text/javascript">
 		mxBasePath = '../src';
@@ -40,7 +34,13 @@
 		// Program starts here. Creates a sample graph in the
 		// DOM node with the specified ID. This function is invoked
 		// from the onLoad event handler of the document (see below).
-		var globalGraph = null;
+
+		//global instance of the graph
+		var GLOBAL_GRAPH = null;
+
+		//constant number of interfaces for non-switch cells
+		var NUM_INTERFACES = 4;
+
 		function main(container, toolbar, sidebar, status)
 		{
 			
@@ -69,7 +69,8 @@
 				// graph, such as the rubberband selection, but most parts
 				// of the UI are custom in this example.
 				var editor = new mxEditor();
-				var graph = editor.graph; globalGraph = graph;
+				var graph = editor.graph; 
+				GLOBAL_GRAPH = graph;
 				var model = graph.getModel();
 
 				// Hook to return the mxImage used for the connection icon				
@@ -369,7 +370,7 @@
 				}
 
 				//Initialize with default graph
-				initLoad(graph, null);
+				initLoad(null);
 			}
 		};
 		
@@ -582,7 +583,7 @@
 				graph.model.beginUpdate();
 				graph.model.setValue(cell, clone);
 				graph.model.endUpdate();
-				printAllCells(graph);
+				debugPrintCells(graph);
 				wnd.destroy();}
 			var cancelFunction = function()
 			{
@@ -626,8 +627,11 @@
 		}
 
 		//Console debugging: print all cells
-		function printAllCells(graph)
+		function debugPrintCells(graph)
 		{
+			console.log("\n=====================================================\n"
+						 +"======================DEBUGGING======================\n"
+						 +"=====================================================");
 			var i = 0;
 			//var isCell = true;
 			var cell = new mxCell();
@@ -682,22 +686,22 @@
 			}
 		}
 
-		function initLoad(graph, xml)
+		function initLoad(xml)
 		{
-			if(typeof(graph) != 'undefined')
+			if(typeof(GLOBAL_GRAPH) != 'undefined')
 			{
-				graph.getModel().beginUpdate();
+				GLOBAL_GRAPH.getModel().beginUpdate();
 				if(xml == null)
 					var doc = mxUtils.parseXml(getGraph('<?php echo $_GET["lab_id"]; ?>'));
 				else
 					var doc = mxUtils.parseXml(xml);
 				// alert(getGraph('<?php echo $_GET["lab_id"]; ?>'));
 				var dec = new mxCodec(doc);
-				dec.decode(doc.documentElement, graph.getModel());
-				graph.getModel().endUpdate();
+				dec.decode(doc.documentElement, GLOBAL_GRAPH.getModel());
+				GLOBAL_GRAPH.getModel().endUpdate();
 			
 				//debugging calls
-				printAllCells(graph);
+				debugPrintCells(GLOBAL_GRAPH);
 			}
 		};
 		
@@ -832,7 +836,7 @@
 	</div>
 	
 	<!-- Creates a container for the sidebar -->
-	<div  onclick="initLoad();" id="toolbarContainer"
+	<div id="toolbarContainer"
 		style="position:absolute;white-space:nowrap;top:0px;left:0px;max-height:24px;height:36px;right:0px;padding:6px;background-image:url('images/toolbar_bg.gif');">
 	</div>
 
@@ -849,13 +853,32 @@
 </body>
 </html>
 
+<!-- include jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<!-- Include ajax commands -->
+<script src="commands.js"></script>
+
 <script type="text/javascript">
 	jQuery(document).ready(function(){
-		loadGraphs();
+		loadGraphs(); // load graph list from database
+
+		//load graph to default dropdown selection, it needs 1ms before finding the dropdown object
+		setTimeout(function(){
+			if(jQuery('#graphList',top.document).length == 0) //If it doesn't exist
+			{
+				alert("Error!");
+			}
+			else
+			{	
+				initLoad(getGraphById(jQuery('#graphList',top.document).val()));	//init graph current selection from dropdown
+			}
+		}
+		,1);
+
 
 		jQuery('#graphList',top.document).change(function() {
-			// alert(jQuery(this).val());
-			initLoad(globalGraph, getGraphById(jQuery(this).val()));
+			initLoad(getGraphById(jQuery(this).val()));	//on change, change graph with selection from dropdown
 		});
 	});
 </script>
