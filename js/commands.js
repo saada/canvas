@@ -78,3 +78,29 @@ function getGraphById(gid)
 	});
 	return myGraph;
 }
+
+function edgeExists(source,target)
+{
+	for (var i = 0; i < source.getEdgeCount(); i++) {
+		var tmp = source.getEdgeAt(i);
+		if(tmp.getTerminal(false) == target)
+			return true;
+	};
+	return false;
+}
+
+function validSwitch(name)
+{
+	var count = -1;
+	if(typeof(name) == 'undefined')
+		name = "mySwitch";
+	var index = jQuery.inArray(name, SWITCHES);
+	var tmp = name;
+	while(index != -1) //if exists
+	{
+		count++;
+		tmp = name.concat(count);
+		index = jQuery.inArray(tmp, SWITCHES);
+	};
+	return tmp;
+}
