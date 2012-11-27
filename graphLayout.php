@@ -28,5 +28,8 @@
 	<div class="row">
 		<select id="graphList">
     	</select>​
+    	<button id="clearBtn">Clear Graph</button>
+    	<button id="deleteBtn">Delete Graph</button>
+    	<button id="loadBtn">Load Graph</button>
 	</div>
 </div>
