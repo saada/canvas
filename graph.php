@@ -79,10 +79,10 @@
 <script type="text/javascript">
 	jQuery(top.document).ready(function(){
 
-		main(jQuery('#graphContainer'),
-		 	jQuery('#toolbarContainer'),
-			jQuery('#sidebarContainer'),
-			jQuery('#statusContainer'));
+		main(document.getElementById('graphContainer'),
+		 	document.getElementById('toolbarContainer'),
+			document.getElementById('sidebarContainer'),
+			document.getElementById('statusContainer'));
 
 		loadGraphs(); // load graph list from database
 
