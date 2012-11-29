@@ -171,7 +171,7 @@ function stopLoadingScreen () {
 	// 		splash.parentNode.removeChild(splash);
 	// 	}
 	// }
-	$('#loadSplash').fadeOut();
+	$('#loadSplash').hide();
 }
 
 //Helper functions
