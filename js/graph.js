@@ -713,7 +713,6 @@ function isSwitchConnected(graph)
 
 function initLoad(xml)
 {
-	startLoadingScreen();
 	CELLS = [];		//reset cells array
 	if(typeof(GLOBAL_GRAPH) != 'undefined')
 	{
