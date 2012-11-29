@@ -1,7 +1,7 @@
 <?php
 	//display in order
 	showWelcomeMessage();
-	showGraph("100%","80%");
+	showGraph("100%","500");
 
 	function showWelcomeMessage(){
 		global $user;
