@@ -1,6 +1,5 @@
 //This is where the graph app starts up
 $(document).ready(function(){
-	$('#toolbarContainer').append('<div id="graphMenu"><div class="row"><select id="graphList"></select>​<button id="clearBtn">Clear Graph</button><button id="deleteBtn">Delete Graph</button><button id="loadBtn">Load Graph</button></div></div>');
 	loadGraphs();			// load graph list from database
 	attachButtonEvents();	// the name is self explanatory
 });
