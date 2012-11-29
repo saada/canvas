@@ -380,7 +380,7 @@ function main(container, toolbar, sidebar, status)
 function addToolbarButton(editor, toolbar, action, label, image)
 {
 	var button = document.createElement('button');
-	button.style.fontSize = '10';
+	// button.style.fontSize = '10';
 	if (image !== null)
 	{
 		var img = document.createElement('img');
