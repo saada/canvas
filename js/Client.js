@@ -11,8 +11,6 @@ Client.prototype.type = null;
 
 Client.prototype.ip = null;
 
-Client.prototype.interface = null;
-
 Client.prototype.label = '<img src="images/icons48/client.png" width="48" height="48"><br>'+
 						'<h1 style="margin:0px;">Client</h1>';
 

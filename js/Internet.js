@@ -11,8 +11,6 @@ Internet.prototype.type = null;
 
 Internet.prototype.ip = null;
 
-Internet.prototype.interface = null;
-
 Internet.prototype.label = '<img src="images/icons48/internet.png" width="48" height="48">'+
 							'<h1 style="margin:0px;">Internet</h1>';
 

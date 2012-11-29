@@ -176,7 +176,6 @@ function main(container, toolbar, sidebar, status)
 
 		client.value.type = 'Client';
 		client.value.ip = '192.168.1.1';
-		client.value.interface = '1';
 		addSidebarIcon(graph, sidebar,client,'images/icons48/client.png');
 
 		// Adds sidebar icon.
@@ -187,7 +186,6 @@ function main(container, toolbar, sidebar, status)
 
 		internet.value.type = 'Internet';
 		internet.value.ip = '192.168.1.1';
-		internet.value.interface = '1';
 		addSidebarIcon(graph, sidebar,internet,'images/icons48/internet.png');
 
 		// Adds sidebar icon.
@@ -198,7 +196,6 @@ function main(container, toolbar, sidebar, status)
 
 		router.value.type = 'Router';
 		router.value.ip = '192.168.1.1';
-		router.value.interface = 1;
 		addSidebarIcon(graph,sidebar,router,'images/icons48/router.png');
 
 		//Adds sidebar icon
@@ -209,7 +206,6 @@ function main(container, toolbar, sidebar, status)
 
 		server.value.type = 'Server';
 		server.value.ip = '192.168.1.1';
-		server.value.interface = 1;
 		addSidebarIcon(graph,sidebar,server,'images/icons48/server.png');
 
 		//Adds sidebar icon
@@ -220,7 +216,6 @@ function main(container, toolbar, sidebar, status)
 
 		sw.value.type = 'Switch';
 		sw.value.ip = '192.168.1.1';
-		sw.value.interface = 1;
 		addSidebarIcon(graph,sidebar,sw,'images/icons48/switch.png');
 
 		// Defines a new export action
@@ -540,7 +535,6 @@ function showProperties(graph, cell){
 		//var id = form.addText('id', cell.id);
 		var nameField = form.addText('Name', cell.value.name);
 		var typeField = form.addText('Type', cell.value.type);
-		var interfaceField = form.addText('interface',cell.value.interface);
 
 		// Show interfaces and their edge terminals
 		var edgeCount = cell.getEdgeCount();
@@ -583,7 +577,6 @@ function showProperties(graph, cell){
 
 			clone.type = typeField.value;
 			// clone.ip = ipField.value;
-			clone.interface = interfaceField.value;
 			//clone.id = id.value;
 			clone.label = '<img src="images/icons48/'+clone.type.toLowerCase()+'.png" width="48" height="48"><br>'+
 							'<h1 style="margin:0px;">'+clone.name+'</h1>';
