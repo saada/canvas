@@ -395,7 +395,7 @@ function main(container, toolbar, sidebar, status)
 		stopLoadingScreen();
 
 		//Initialize with default graph
-		initLoad(getGraphById(jQuery('#graphList',top.document).val()));	//init graph current selection from dropdown
+		loadGraph();	//init graph current selection from dropdown
 	}
 }
 
