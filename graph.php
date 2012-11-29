@@ -26,7 +26,7 @@
 <body>
 
 	<!-- Creates a container for the splash screen -->
-	<!-- <div id="loadSplash">
+	<div id="loadSplash">
 		<div id="splash"
 		style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;">
 		<center id="splash" style="padding-top:230px;">
@@ -34,7 +34,7 @@
 		</center>
 		</div>
 	</div>
- -->
+
 	<!-- Creates a container for the sidebar -->
 	<div id="toolbarContainer"
 		style="position:absolute;white-space:nowrap;top:0px;left:0px;max-height:24px;height:36px;right:0px;padding:6px;background-image:url('images/toolbar_bg.gif');">

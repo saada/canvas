@@ -392,7 +392,7 @@ function main(container, toolbar, sidebar, status)
 		}));
 
 		// Fades-out the splash screen after the UI has been loaded.
-		// stopLoadingScreen();
+		stopLoadingScreen();
 
 		//Initialize with default graph
 		// initLoad(null);
