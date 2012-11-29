@@ -15,6 +15,11 @@ function loadGraphs(){
 					'<option value="'+v.gid+'">'+v.name+'</option>');
 			});
 			loadGraph();	//init graph current selection from dropdown
+
+			main(document.getElementById('graphContainer'),
+				document.getElementById('toolbarContainer'),
+				document.getElementById('sidebarContainer'),
+				document.getElementById('statusContainer'));
 		},
 		error:function(xhr,opt,e){
 			alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
@@ -168,3 +173,26 @@ Array.prototype.remove = function(from, to) {
 	this.length = from < 0 ? this.length + from : from;
 	return this.push.apply(this, rest);
 };
+
+$(top.document).ready(function(){
+
+	loadGraphs(); // load graph list from database
+
+
+	$('#graphList',top.document).change(function() {
+		loadGraph();
+	});
+
+	$('#loadBtn',top.document).click(function() {
+		loadGraph();
+	});
+
+	$('#clearBtn', top.document).click(function(){
+		clearGraph();
+	});
+
+	$('#deleteBtn', top.document).click(function(){
+		if(confirm("Delete graph?"))
+			deleteGraph();
+	});
+});
