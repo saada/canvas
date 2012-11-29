@@ -79,12 +79,12 @@
 <script type="text/javascript">
 	jQuery(top.document).ready(function(){
 
+		loadGraphs(); // load graph list from database
+
 		main(document.getElementById('graphContainer'),
 		 	document.getElementById('toolbarContainer'),
 			document.getElementById('sidebarContainer'),
 			document.getElementById('statusContainer'));
-
-		loadGraphs(); // load graph list from database
 
 		jQuery('#graphList',top.document).change(function() {
 			loadGraph();
