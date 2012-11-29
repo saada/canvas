@@ -255,17 +255,6 @@ function main(container, toolbar, sidebar, status)
 
 		addToolbarButton(editor, toolbar, 'export', 'Export', 'images/export1.png');
 
-		// Defines a load action
-		editor.addAction('load',function(editor,cell)
-		{
-			var xml = mxUtils.load('myfile/<?php echo $_GET["lab_id"] . ".xml"; ?>');
-			var doc = xml.getDocumentElement();
-			var dec = new mxCodec(doc);
-			dec.decode(doc,graph.getModel());
-			graph.getModel().endUpdate();
-		});
-
-		addToolbarButton(editor,toolbar,'load','Load','images/export1.png');
 		// ---
 		// Defines the icon configure action
 		editor.addAction('configure', function(editor, cell)
