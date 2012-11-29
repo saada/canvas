@@ -151,7 +151,7 @@ function clearGraph(){
 
 function startLoadingScreen () {
 	// $("#loadSplash").prepend('<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;"> <center id="splash" style="padding-top:230px;">	<img src="editors/images/loading.gif"> </center></div>');
-	$('#loadSplash').animate({opacity: 1}, 1000);
+	$('#loadSplash').animate({opacity: 1}, 300);
 }
 
 function stopLoadingScreen () {
@@ -171,7 +171,7 @@ function stopLoadingScreen () {
 	// 		splash.parentNode.removeChild(splash);
 	// 	}
 	// }
-	$('#loadSplash').animate({opacity: 0}, 1000);
+	$('#loadSplash').animate({opacity: 0}, 300);
 }
 
 //Helper functions
