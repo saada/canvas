@@ -118,6 +118,7 @@ function deleteGraph()
 
 function loadGraph()
 {
+	startLoadingScreen();
 	initLoad(getGraphById($('#graphList',top.document).val()));	//on change, change graph with selection from dropdown
 }
 
@@ -146,12 +147,13 @@ function getValidName(name)
 }
 
 function clearGraph(){
+	startLoadingScreen();
 	initLoad('<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel>');
 }
 
 function startLoadingScreen () {
 	// $("#loadSplash").prepend('<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;"> <center id="splash" style="padding-top:230px;">	<img src="editors/images/loading.gif"> </center></div>');
-	$('#loadSplash').animate({opacity: 1}, 300);
+	$('#loadSplash').animate({opacity: 1}, 100);
 }
 
 function stopLoadingScreen () {
@@ -171,7 +173,7 @@ function stopLoadingScreen () {
 	// 		splash.parentNode.removeChild(splash);
 	// 	}
 	// }
-	$('#loadSplash').animate({opacity: 0}, 300);
+	$('#loadSplash').animate({opacity: 0}, 100);
 }
 
 //Helper functions
