@@ -38,6 +38,15 @@
 	<!-- Creates a container for the sidebar -->
 	<div id="toolbarContainer"
 		style="position:absolute;white-space:nowrap;top:0px;left:0px;max-height:24px;height:36px;right:0px;padding:6px;background-image:url('images/toolbar_bg.gif');">
+		<div id="graphMenu">
+			<div class="row">
+				<select id="graphList">
+		    	</select>​
+		    	<button id="clearBtn">Clear Graph</button>
+		    	<button id="deleteBtn">Delete Graph</button>
+		    	<button id="loadBtn">Load Graph</button>
+			</div>
+		</div>
 	</div>
 
 	<!-- Creates a container for the toolboox -->

@@ -1,5 +1,5 @@
 //This is where the graph app starts up
-$(top.document).ready(function(){
+$(document).ready(function(){
 	loadGraphs();			// load graph list from database
 	attachButtonEvents();	// the name is self explanatory
 });
@@ -17,7 +17,7 @@ function loadGraphs(){
 
 			//populate dropdownlist
 			$.each(result, function(k, v){
-				$("#graphList",top.document).append(
+				$("#graphList").append(
 					'<option value="'+v.gid+'">'+v.name+'</option>');
 			});
 
@@ -43,7 +43,7 @@ function addGraph(name, xml)
 			console.log("===DEBUG=== addGraph()");
 			console.log(result);
 			alert("Successfully added graph: "+result.name+". Id="+result.gid);
-			$("#graphList", top.document)
+			$("#graphList")
 				.append('<option value="'+result.gid+'">'+result.name+'</option>')
 				.val(result.gid);
 		},
@@ -95,7 +95,7 @@ function getGraphById(gid)
 
 function deleteGraph()
 {
-	gid = $('#graphList',top.document).val();
+	gid = $('#graphList').val();
 	$.ajax({
 		url: "/canvas/canvas/commands.php",
 		type: "POST",
@@ -105,7 +105,7 @@ function deleteGraph()
 			clearGraph();
 			alert("Successfully removed graph");
 			console.log(result);
-			$("#graphList option[value="+gid+"]", top.document).remove();
+			$("#graphList option[value="+gid+"]").remove();
 			loadGraph();
 		},
 		error:function(xhr,opt,e){
@@ -119,7 +119,7 @@ function deleteGraph()
 function loadGraph()
 {
 	startLoadingScreen();
-	initLoad(getGraphById($('#graphList',top.document).val()));	//on change, change graph with selection from dropdown
+	initLoad(getGraphById($('#graphList').val()));	//on change, change graph with selection from dropdown
 }
 
 function edgeExists(source,target)
@@ -169,19 +169,19 @@ Array.prototype.remove = function(from, to) {
 
 //Attach button events
 function attachButtonEvents(){
-	$('#graphList',top.document).change(function() {
+	$('#graphList').change(function() {
 		loadGraph();
 	});
 
-	$('#loadBtn',top.document).click(function() {
+	$('#loadBtn').click(function() {
 		loadGraph();
 	});
 
-	$('#clearBtn', top.document).click(function(){
+	$('#clearBtn').click(function(){
 		clearGraph();
 	});
 
-	$('#deleteBtn', top.document).click(function(){
+	$('#deleteBtn').click(function(){
 		if(confirm("Delete graph?"))
 			deleteGraph();
 	});
