@@ -229,9 +229,6 @@ function main(container, toolbar, sidebar, status)
 			if(!isIconConnected(graph))
 			{
 				alert("some icons are not connected");
-			}else if(!isSwitchConnected(graph))
-			{
-				alert("123");
 			}else
 			{
 			var xmlform = new mxForm();
@@ -293,9 +290,6 @@ function main(container, toolbar, sidebar, status)
 			if(!isIconConnected(graph))
 			{
 				alert("some icons are not connected");
-			}else if(!isSwitchConnected(graph))
-			{
-				alert("123");
 			}else
 			{
 				var xmlform = new mxForm();
@@ -636,23 +630,21 @@ function showProperties(graph, cell){
 //check whether all icons are connected
 function isIconConnected(graph)
 {
-	var i = 2;
-	//var isCell = true;
+	var root = graph.getModel().getCell(1);
 	var cell = new mxCell();
-	while(true)
-	{
-		cell = graph.getModel().getCell(i);
-		if(cell===null)
+
+	for (var i = 0; i < root.getChildCount(); i++) {
+		cell = root.getChildAt(i);
+		if(cell === null)
 		{
 			break;
-		}else if(graph.getModel().isVertex(cell))
+		}else if(cell.isVertex())
 		{
-			if(cell.getEdgeCount()===0)
+			if(cell.getEdgeCount() === 0)
 			{
 				return false;
 			}
 		}
-		i++;
 	}
 	return true;
 }
@@ -677,37 +669,6 @@ function debugPrintCells(graph)
 		if(cell.value !== null)
 			console.log("Type: "+ cell.value.type);
 
-	}
-}
-
-function isSwitchConnected(graph)
-{
-	if(graph.getModel().getCell(5)!==null)
-	{
-		var i =2;
-		var cell = new mxCell();
-		while(true)
-		{
-			cell = graph.getModel().getCell(i);
-			if(cell===null)
-			{
-				break;
-			}else
-			{
-				if(cell.isEdge())
-				{
-					if(cell.getTerminal().value.type!='Switch')
-					{
-						return false;
-					}
-				}
-			}
-			i++;
-		}
-		return true;
-	}else
-	{
-		return true;
 	}
 }
 
