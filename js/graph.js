@@ -21,7 +21,7 @@ function main(container, toolbar, sidebar, status)
 	else
 	{
 		// Enables guides
-	    mxGraphHandler.prototype.guidesEnabled = true;
+		mxGraphHandler.prototype.guidesEnabled = true;
 
 		// Workaround for Internet Explorer ignoring certain CSS directives
 		if (mxClient.IS_IE)
@@ -64,7 +64,7 @@ function main(container, toolbar, sidebar, status)
 		// Enables new connections
 		graph.setConnectable(true);
 
-	    // Disables HTML labels for swimlanes to avoid conflict
+		// Disables HTML labels for swimlanes to avoid conflict
 		// for the event processing on the child cells. HTML
 		// labels consume events before underlying cells get the
 		// chance to process those events.
@@ -77,11 +77,11 @@ function main(container, toolbar, sidebar, status)
 		graph.isHtmlLabel = function(cell)
 		{
 			return true;
-		}
+		};
 
 		//...
 		graph.getLabel = function(cell){
-			if(cell.value!=null){
+			if(cell.value!==null){
 				if(cell.isEdge())
 				{
 					if(cell.getTerminal().value.type == "Switch")
@@ -91,7 +91,7 @@ function main(container, toolbar, sidebar, status)
 							{
 								return "eth"+i+":"+cell.value;
 							}
-						};
+						}
 					}
 					return "";
 					// return cell.getTerminal(false).value.edgeFields
@@ -99,23 +99,23 @@ function main(container, toolbar, sidebar, status)
 				return cell.value.label;
 			}
 			return mxGraph.prototype.getLabel.apply(this,arguments);
-		}
+		};
 
 
 		//Prevent and validate edge connections
 		graph.getEdgeValidationError  = function(edge, source, target){
-		    if(source.value.type != 'Switch'
-		    	&& target.value.type == 'Switch'
-		    	&& source.getEdgeCount() < NUM_INTERFACES	//Anything not a switch
-		    	&& !edgeExists(source,target)				//Prevent duplicate edges
-		    	)
-		    {
-		    	return mxGraph.prototype.getEdgeValidationError.apply(this, arguments); // "supercall"
-		    }
-		    if(source.value.type == "Switch")
-		    	return "Switch cannot target other elements!";
-		    else
-		    	return source.value.type+" must target any disconnected Switch!";
+			if(source.value.type != 'Switch' &&
+				target.value.type == 'Switch' &&
+				source.getEdgeCount() < NUM_INTERFACES &&	//Anything not a switch
+				!edgeExists(source,target)					//Prevent duplicate edges
+				)
+			{
+				return mxGraph.prototype.getEdgeValidationError.apply(this, arguments); // "supercall"
+			}
+			if(source.value.type == "Switch")
+				return "Switch cannot target other elements!";
+			else
+				return source.value.type+" must target any disconnected Switch!";
 		};
 
 		model.cellRemoved = function(cell){
@@ -153,7 +153,7 @@ function main(container, toolbar, sidebar, status)
 				var validName = getValidName(cell.value.name);
 				cell.value.name = validName;
 				cell.value.label = '<img src="images/icons48/'+cell.value.type.toLowerCase()+'.png" width="48" height="48">'+
-				 					'<h1 style="margin:0px;">'+validName+'</h1>';
+									'<h1 style="margin:0px;">'+validName+'</h1>';
 				console.log("***Adding cell...");
 			}
 			else if(cell.isEdge())
@@ -162,7 +162,7 @@ function main(container, toolbar, sidebar, status)
 			}
 			return mxGraph.prototype.addCell.apply(this, arguments);
 
-		}
+		};
 
 
 		// Adds all required styles to the graph (see below)
@@ -245,17 +245,17 @@ function main(container, toolbar, sidebar, status)
 			var xmlfield = xmlform.addField('',textarea);
 
 			// Defines the function to be executed when the
-	  // OK button is pressed in the dialog
+			// OK button is pressed in the dialog
 			var okFunction = function()
 			{
 				mxUtils.save('\\<?php echo $_GET["lab_id"] . ".xml"; ?>.xml',xmlfield.value);
 				alert("the xml file has been saved.");
 				wnd.destroy();
-			}
+			};
 			var cancelFunction = function()
 			{
 				wnd.destroy();
-			}
+			};
 			xmlform.addButtons(okFunction, cancelFunction);
 			wnd = showModalWindow(graph,'XML',xmlform.table, 410, 460);
 			}
@@ -273,12 +273,12 @@ function main(container, toolbar, sidebar, status)
 			graph.getModel().endUpdate();
 		});
 
-		addToolbarButton(editor,toolbar,'load','Load','images/export1.png')
+		addToolbarButton(editor,toolbar,'load','Load','images/export1.png');
 		// ---
 		// Defines the icon configure action
 		editor.addAction('configure', function(editor, cell)
 		{
-			if (cell == null)
+			if (cell === null)
 			{
 				cell = graph.getSelectionCell();
 			}
@@ -316,18 +316,18 @@ function main(container, toolbar, sidebar, status)
 				var xmlfield = xmlform.addField('XML',textarea);
 
 				// Defines the function to be executed when the
-		  		// OK button is pressed in the dialog
+				// OK button is pressed in the dialog
 				var okFunction = function()
 				{
 					// mxUtils.save('\\<?php echo $_GET["lab_id"] . ".xml"; ?>.xml',xmlfield.value);
 					addGraph(gName.value,xmlfield.value);
 
 					wnd.destroy();
-				}
+				};
 				var cancelFunction = function()
 				{
 					wnd.destroy();
-				}
+				};
 				xmlform.addButtons(okFunction, cancelFunction);
 				wnd = showModalWindow(graph,'Information Form',xmlform.table, 410, 380);
 			}
@@ -336,20 +336,20 @@ function main(container, toolbar, sidebar, status)
 		// Installs context menu
 		graph.panningHandler.factoryMethod = function(menu, cell, evt)
 		{
-			if(cell != null)
+			if(cell !== null)
 			{
 				if(graph.getModel().isVertex(cell))
 
 				{
 					menu.addItem('Copy', null, function()
 					{
-					  editor.execute('copy');
+						editor.execute('copy');
 					});
 					menu.addItem('Paste', null, function()
 					{
 						editor.execute('paste');
 					});
-				  	menu.addItem('Delete', null, function()
+					menu.addItem('Delete', null, function()
 					{
 						editor.execute('delete');
 					});
@@ -361,7 +361,7 @@ function main(container, toolbar, sidebar, status)
 
 				else if(graph.getModel().isEdge(cell))
 				{
-				  	menu.addItem('Delete', null, function()
+					menu.addItem('Delete', null, function()
 					{
 						editor.execute('delete');
 					});
@@ -397,13 +397,13 @@ function main(container, toolbar, sidebar, status)
 		//Initialize with default graph
 		// initLoad(null);
 	}
-};
+}
 
 function addToolbarButton(editor, toolbar, action, label, image)
 {
 	var button = document.createElement('button');
 	button.style.fontSize = '10';
-	if (image != null)
+	if (image !== null)
 	{
 		var img = document.createElement('img');
 		img.setAttribute('src', image);
@@ -420,7 +420,7 @@ function addToolbarButton(editor, toolbar, action, label, image)
 	//Creates a text node for the given string and appends it to the given parent.
 	mxUtils.write(button, label);
 	toolbar.appendChild(button);
-};
+}
 
 function showModalWindow(graph, title, content, width, height)
 {
@@ -454,7 +454,7 @@ function showModalWindow(graph, title, content, width, height)
 	});
 	wnd.setVisible(true);
 	return wnd;
-};
+}
 
 function addSidebarIcon(graph, sidebar, prototype, image)
 {
@@ -484,7 +484,7 @@ function addSidebarIcon(graph, sidebar, prototype, image)
 			// var validName = getValidName(v1.value.name);
 			// v1.value.name = validName;
 			// v1.value.label = '<img src="images/icons48/'+v1.value.type.toLowerCase()+'.png" width="48" height="48">'+
-			// 	 '<h1 style="margin:0px;">'+validName+'</h1>';
+			// '<h1 style="margin:0px;">'+validName+'</h1>';
 			// console.log(v1);
 			graph.addCell(v1, parent);
 		}
@@ -494,7 +494,7 @@ function addSidebarIcon(graph, sidebar, prototype, image)
 		}
 
 		graph.setSelectionCell(v1);
-	}
+	};
 
 	// Creates the image which is used as the sidebar icon (drag source)
 	var img = document.createElement('img');
@@ -508,11 +508,11 @@ function addSidebarIcon(graph, sidebar, prototype, image)
 	var dragImage = img.cloneNode(true);
 	var ds = mxUtils.makeDraggable(img, graph, funct, dragImage);
 	ds.setGuidesEnabled(true);
-};
+}
 
 function configureStylesheet(graph)
 {
-	var style = new Object();
+	var style = {};
 	style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
 	style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
 	style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
@@ -533,7 +533,7 @@ function configureStylesheet(graph)
 	style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#FFFFFF';
 	style[mxConstants.STYLE_STROKEWIDTH] = '2';
 	style[mxConstants.STYLE_ROUNDED] = true;
-};
+}
 
 function showProperties(graph, cell){
 	// Creates a form for the user object inside
@@ -555,7 +555,7 @@ function showProperties(graph, cell){
 			var edge = cell.getEdgeAt(i);
 			var terminal = edge.getTerminal();
 			var source = edge.getTerminal(true);
-			if(terminal != null && terminal.id != cell.id)
+			if(terminal !== null && terminal.id != cell.id)
 			{
 				if(cell.value.type == 'Client')
 					edgeFields.push(
@@ -573,7 +573,7 @@ function showProperties(graph, cell){
 					});
 				}
 			}
-		};
+		}
 
 		var wnd = null;
 		// Defines the function to be executed when the
@@ -590,9 +590,9 @@ function showProperties(graph, cell){
 			clone.type = typeField.value;
 			// clone.ip = ipField.value;
 			clone.interface = interfaceField.value;
-			  //clone.id = id.value;
+			//clone.id = id.value;
 			clone.label = '<img src="images/icons48/'+clone.type.toLowerCase()+'.png" width="48" height="48"><br>'+
-							 '<h1 style="margin:0px;">'+clone.name+'</h1>';
+							'<h1 style="margin:0px;">'+clone.name+'</h1>';
 			clone.edgeFields = [];
 
 			function Interface(interfaceId, ip, netmask, gateway){
@@ -600,41 +600,38 @@ function showProperties(graph, cell){
 				this.ip = ip;
 				this.netmask = netmask;
 				this.gateway = gateway;
-			};
+			}
 
 			for (var i = 0; i < edgeFields.length; i++) {
-				// console.log(new Interface(edgeFields[i].interfaceId.value,
-				// 					edgeFields[i].ip.value,
-				// 					edgeFields[i].netmask.value,
-				// 					edgeFields[i].gateway.value));
 				var tmp = new Interface(edgeFields[i].interfaceId.value,
 									edgeFields[i].ip.value,
 									edgeFields[i].netmask.value,
 									edgeFields[i].gateway.value);
 				clone.edgeFields.push(tmp);
-			};
+			}
 
 			graph.model.beginUpdate();
 			graph.model.setValue(cell, clone);
 			graph.model.endUpdate();
 			// debugPrintCells(graph);
-			wnd.destroy();}
+			wnd.destroy();
+		};
 		var cancelFunction = function()
 		{
 			wnd.destroy();
-		}
+		};
 		form.addButtons(okFunction, cancelFunction);
 		var name = cell.value.name;
 	}
 	else if(cell.isEdge())
 	{
-		var sourceName = form.addText('SourceName', cell.getTerminal(true).value.name);
-		var sourceInterface = form.addText('SourceInterface', cell.getTerminal(true).value.interface);
-		var targetName = form.addText('TargetName', cell.getTerminal().value.name);
-		var targetInterface = form.addText('TargetInterface', cell.getTerminal().value.interface);
+		// var sourceName = form.addText('SourceName', cell.getTerminal(true).value.name);
+		// var sourceInterface = form.addText('SourceInterface', cell.getTerminal(true).value.interface);
+		// var targetName = form.addText('TargetName', cell.getTerminal().value.name);
+		// var targetInterface = form.addText('TargetInterface', cell.getTerminal().value.interface);
 	}
 	wnd = showModalWindow(graph,name,form.table, 300, 200+80*edgeFields.length);
-};
+}
 
 //check whether all icons are connected
 function isIconConnected(graph)
@@ -645,12 +642,12 @@ function isIconConnected(graph)
 	while(true)
 	{
 		cell = graph.getModel().getCell(i);
-		if(cell==null)
+		if(cell===null)
 		{
 			break;
 		}else if(graph.getModel().isVertex(cell))
 		{
-			if(cell.getEdgeCount()==0)
+			if(cell.getEdgeCount()===0)
 			{
 				return false;
 			}
@@ -663,9 +660,9 @@ function isIconConnected(graph)
 //Console debugging: print all cells
 function debugPrintCells(graph)
 {
-	console.log("\n=====================================================\n"
-				 +"======================DEBUGGING======================\n"
-				 +"=====================================================");
+	console.log("\n=====================================================\n"+
+				"======================DEBUGGING======================\n"+
+				"=====================================================");
 	//var isCell = true;
 
 	var root = graph.getModel().getCell(1);
@@ -677,22 +674,22 @@ function debugPrintCells(graph)
 		console.log("===DEBUG=== Cell: "+cell.id);
 		console.log(cell);
 		console.log("Edge count: "+graph.getModel().getEdgeCount(cell));
-		if(cell.value != null)
+		if(cell.value !== null)
 			console.log("Type: "+ cell.value.type);
 
-	};
+	}
 }
 
 function isSwitchConnected(graph)
 {
-	if(graph.getModel().getCell(5)!=null)
+	if(graph.getModel().getCell(5)!==null)
 	{
 		var i =2;
 		var cell = new mxCell();
 		while(true)
 		{
 			cell = graph.getModel().getCell(i);
-			if(cell==null)
+			if(cell===null)
 			{
 				break;
 			}else
@@ -721,10 +718,11 @@ function initLoad(xml)
 	if(typeof(GLOBAL_GRAPH) != 'undefined')
 	{
 		GLOBAL_GRAPH.getModel().beginUpdate();
-		if(xml == null)
-			var doc = mxUtils.parseXml(getGraph('<?php echo $_GET["lab_id"]; ?>'));
+		var doc;
+		if(xml === null)
+			doc = mxUtils.parseXml(getGraph('<?php echo $_GET["lab_id"]; ?>'));
 		else
-			var doc = mxUtils.parseXml(xml);
+			doc = mxUtils.parseXml(xml);
 		var dec = new mxCodec(doc);
 		dec.decode(doc.documentElement, GLOBAL_GRAPH.getModel());
 		GLOBAL_GRAPH.getModel().endUpdate();
@@ -733,4 +731,4 @@ function initLoad(xml)
 		debugPrintCells(GLOBAL_GRAPH);
 	}
 	stopLoadingScreen();
-};
+}
