@@ -1,3 +1,9 @@
+//This is where the graph app starts up
+$(top.document).ready(function(){
+	loadGraphs();			// load graph list from database
+	attachButtonEvents();	// the name is self explanatory
+});
+
 // <AJAX>
 function loadGraphs(){
 	$.ajax({
@@ -173,11 +179,8 @@ Array.prototype.remove = function(from, to) {
 	return this.push.apply(this, rest);
 };
 
-$(top.document).ready(function(){
-
-	loadGraphs(); // load graph list from database
-
-
+//Attach button events
+function attachButtonEvents(){
 	$('#graphList',top.document).change(function() {
 		loadGraph();
 	});
@@ -194,4 +197,4 @@ $(top.document).ready(function(){
 		if(confirm("Delete graph?"))
 			deleteGraph();
 	});
-});
+}
