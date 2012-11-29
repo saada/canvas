@@ -152,12 +152,13 @@ function clearGraph(){
 }
 
 function startLoadingScreen () {
-	if($('#loadSplash').css('opacity') == 0)
+	if($('#loadSplash').css('opacity') < 0.5)
 		$('#loadSplash').animate({opacity: 1}, 100);
 }
 
 function stopLoadingScreen () {
-	$('#loadSplash').animate({opacity: 0}, 100);
+	if($('#loadSplash').css('opacity') > 0.5)
+		$('#loadSplash').animate({opacity: 0}, 100);
 }
 
 //Helper functions
