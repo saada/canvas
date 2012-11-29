@@ -392,21 +392,7 @@ function main(container, toolbar, sidebar, status)
 		}));
 
 		// Fades-out the splash screen after the UI has been loaded.
-		var splash = document.getElementById('splash');
-		if (splash != null)
-		{
-			try
-			{
-				mxEvent.release(splash);
-				mxEffects.fadeOut(splash, 100, true);
-			}
-			catch (e)
-			{
-
-				// mxUtils is not available (library not loaded)
-				splash.parentNode.removeChild(splash);
-			}
-		}
+		// stopLoadingScreen();
 
 		//Initialize with default graph
 		// initLoad(null);
@@ -730,7 +716,7 @@ function isSwitchConnected(graph)
 
 function initLoad(xml)
 {
-	jQuery("#loadSplash").prepend('<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;"> <center id="splash" style="padding-top:230px;"> 	<img src="editors/images/loading.gif"> </center></div>');
+	startLoadingScreen();
 	CELLS = [];		//reset cells array
 	if(typeof(GLOBAL_GRAPH) != 'undefined')
 	{
@@ -746,20 +732,5 @@ function initLoad(xml)
 		//debugging calls
 		debugPrintCells(GLOBAL_GRAPH);
 	}
-	// Fades-out the splash screen after the UI has been loaded.
-	var splash = document.getElementById('splash');
-	if (splash != null)
-	{
-		try
-		{
-			mxEvent.release(splash);
-			mxEffects.fadeOut(splash, 100, true);
-		}
-		catch (e)
-		{
-
-			// mxUtils is not available (library not loaded)
-			splash.parentNode.removeChild(splash);
-		}
-	}
+	stopLoadingScreen();
 };
