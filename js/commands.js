@@ -152,27 +152,11 @@ function clearGraph(){
 }
 
 function startLoadingScreen () {
-	// $("#loadSplash").prepend('<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;"> <center id="splash" style="padding-top:230px;">	<img src="editors/images/loading.gif"> </center></div>');
-	$('#loadSplash').animate({opacity: 1}, 100);
+	if($('#loadSplash').css('opacity') < 0)
+		$('#loadSplash').animate({opacity: 1}, 100);
 }
 
 function stopLoadingScreen () {
-	// Fades-out the splash screen after the UI has been loaded.
-	// var splash = document.getElementById('splash');
-	// if (splash !== null)
-	// {
-	// 	try
-	// 	{
-	// 		mxEvent.release(splash);
-	// 		mxEffects.fadeOut(splash, 100, true);
-	// 	}
-	// 	catch (e)
-	// 	{
-
-	// 		// mxUtils is not available (library not loaded)
-	// 		splash.parentNode.removeChild(splash);
-	// 	}
-	// }
 	$('#loadSplash').animate({opacity: 0}, 100);
 }
 
