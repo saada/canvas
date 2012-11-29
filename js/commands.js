@@ -1,6 +1,6 @@
 // <AJAX>
 function loadGraphs(){
-	jQuery.ajax({
+	$.ajax({
 		url: "/canvas/canvas/commands.php",
 		type: "POST",
 		data: {action : "getAllGraphs"},
@@ -10,8 +10,8 @@ function loadGraphs(){
 			console.log(result);
 
 			//populate dropdownlist
-			jQuery.each(result, function(k, v){
-				jQuery("#graphList",top.document).append(
+			$.each(result, function(k, v){
+				$("#graphList",top.document).append(
 					'<option value="'+v.gid+'">'+v.name+'</option>');
 			});
 			loadGraph();	//init graph current selection from dropdown
@@ -24,7 +24,7 @@ function loadGraphs(){
 
 function addGraph(name, xml)
 {
-	jQuery.ajax({
+	$.ajax({
 		url: "/canvas/canvas/commands.php",
 		type: "POST",
 		data: {action : "addGraph", name: name, xml: xml},
@@ -33,7 +33,7 @@ function addGraph(name, xml)
 			console.log("===DEBUG=== addGraph()");
 			console.log(result);
 			alert("Successfully added graph: "+result.name+". Id="+result.gid);
-			jQuery("#graphList", top.document)
+			$("#graphList", top.document)
 				.append('<option value="'+result.gid+'">'+result.name+'</option>')
 				.val(result.gid);
 		},
@@ -46,7 +46,7 @@ function addGraph(name, xml)
 function getGraph(name)
 {
 	var myGraph = null;
-	jQuery.ajax({
+	$.ajax({
 		url: "/canvas/canvas/commands.php",
 		type: "POST",
 		data: {action : "getGraph", name: name},
@@ -66,7 +66,7 @@ function getGraph(name)
 function getGraphById(gid)
 {
 	var myGraph = null;
-	jQuery.ajax({
+	$.ajax({
 		url: "/canvas/canvas/commands.php",
 		type: "POST",
 		data: {action : "getGraphById", gid: gid},
@@ -85,8 +85,8 @@ function getGraphById(gid)
 
 function deleteGraph()
 {
-	gid = jQuery('#graphList',top.document).val();
-	jQuery.ajax({
+	gid = $('#graphList',top.document).val();
+	$.ajax({
 		url: "/canvas/canvas/commands.php",
 		type: "POST",
 		data: {action : "deleteGraph", gid: gid},
@@ -108,7 +108,7 @@ function deleteGraph()
 
 function loadGraph()
 {
-	initLoad(getGraphById(jQuery('#graphList',top.document).val()));	//on change, change graph with selection from dropdown
+	initLoad(getGraphById($('#graphList',top.document).val()));	//on change, change graph with selection from dropdown
 }
 
 function edgeExists(source,target)
@@ -124,13 +124,13 @@ function edgeExists(source,target)
 function getValidName(name)
 {
 	var count = 0;
-	var index = jQuery.inArray(name, CELLS);
+	var index = $.inArray(name, CELLS);
 	var tmp = name;
 	while(index != -1) //if exists
 	{
 		count++;
 		tmp = name.concat(count);
-		index = jQuery.inArray(tmp, CELLS);
+		index = $.inArray(tmp, CELLS);
 	}
 	return tmp;
 }
@@ -140,7 +140,7 @@ function clearGraph(){
 }
 
 function startLoadingScreen () {
-	jQuery("#loadSplash").prepend('<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;"> <center id="splash" style="padding-top:230px;">	<img src="editors/images/loading.gif"> </center></div>');
+	$("#loadSplash").prepend('<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;"> <center id="splash" style="padding-top:230px;">	<img src="editors/images/loading.gif"> </center></div>');
 }
 
 function stopLoadingScreen () {
