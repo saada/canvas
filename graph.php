@@ -79,27 +79,12 @@
 <script type="text/javascript">
 	jQuery(top.document).ready(function(){
 
-		main(document.getElementById('graphContainer'),
-		 	document.getElementById('toolbarContainer'),
-			document.getElementById('sidebarContainer'),
-			document.getElementById('statusContainer'));
+		main(jQuery('#graphContainer'),
+		 	jQuery('#toolbarContainer'),
+			jQuery('#sidebarContainer'),
+			jQuery('#statusContainer'));
 
 		loadGraphs(); // load graph list from database
-
-		//load graph to default dropdown selection, it needs 1ms before finding the dropdown object
-		setTimeout(function(){
-			if(jQuery('#graphList',top.document).length == 0) //If it doesn't exist
-			{
-				alert("Error!");
-			}
-			else
-			{
-				jQuery('div#splash').show();
-				initLoad(getGraphById(jQuery('#graphList',top.document).val()));	//init graph current selection from dropdown
-			}
-		}
-		,500);
-
 
 		jQuery('#graphList',top.document).change(function() {
 			loadGraph();

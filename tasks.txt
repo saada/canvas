@@ -8,5 +8,15 @@ DONE:
 3) Anything that is not a switch can have up to 4 interfaces (And make this variable configurable)
 
 TODO:
+
+//New Idea
+4) Make edges be eth connections and have them hold a dropdown for interface, ip textfield, netmask, etc...
+
+//Old idea
 4) Dropdown for switch names including BLANK option. Once switch selected, you can choose ethernet from dropdown, and type ip, netmask, etc...
 5) ETH0to ETH3 including BLANK option dropdown and validate that only one eth per edge
+
+FUTURE MODIFICATIONS:
+- Make loading screen appear onCHANGE instead of after ajax call response.
+I also need to figure out how to do the ajax call ASYNCHRONOUSLY.
+- Use jquery fadein and fadeout rather than jgraph's effects for loading screen

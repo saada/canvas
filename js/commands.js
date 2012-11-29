@@ -14,6 +14,7 @@ function loadGraphs(){
 				jQuery("#graphList",top.document).append(
 					'<option value="'+v.gid+'">'+v.name+'</option>');
 			});
+			loadGraph();	//init graph current selection from dropdown
 		},
 		error:function(xhr,opt,e){
 			alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
@@ -139,13 +140,13 @@ function clearGraph(){
 }
 
 function startLoadingScreen () {
-	jQuery("#loadSplash").prepend('<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;"> <center id="splash" style="padding-top:230px;"> 	<img src="editors/images/loading.gif"> </center></div>');
+	jQuery("#loadSplash").prepend('<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;"> <center id="splash" style="padding-top:230px;">	<img src="editors/images/loading.gif"> </center></div>');
 }
 
 function stopLoadingScreen () {
 	// Fades-out the splash screen after the UI has been loaded.
 	var splash = document.getElementById('splash');
-	if (splash != null)
+	if (splash !== null)
 	{
 		try
 		{
