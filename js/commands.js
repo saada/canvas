@@ -14,7 +14,6 @@ function loadGraphs(){
 				$("#graphList",top.document).append(
 					'<option value="'+v.gid+'">'+v.name+'</option>');
 			});
-			loadGraph();	//init graph current selection from dropdown
 
 			main(document.getElementById('graphContainer'),
 				document.getElementById('toolbarContainer'),
