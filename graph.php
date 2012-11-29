@@ -75,32 +75,3 @@
 <script src="js/Router.js"></script>
 <script src="js/Internet.js"></script>
 <script src="js/Client.js"></script>
-
-<script type="text/javascript">
-	jQuery(top.document).ready(function(){
-
-		loadGraphs(); // load graph list from database
-
-		main(document.getElementById('graphContainer'),
-		 	document.getElementById('toolbarContainer'),
-			document.getElementById('sidebarContainer'),
-			document.getElementById('statusContainer'));
-
-		jQuery('#graphList',top.document).change(function() {
-			loadGraph();
-		});
-
-		jQuery('#loadBtn',top.document).click(function() {
-			loadGraph();
-		});
-
-		jQuery('#clearBtn', top.document).click(function(){
-			clearGraph();
-		});
-
-		jQuery('#deleteBtn', top.document).click(function(){
-			if(confirm("Delete graph?"))
-				deleteGraph();
-		});
-	});
-</script>
