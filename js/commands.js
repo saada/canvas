@@ -132,6 +132,28 @@ function edgeExists(source,target)
 	return false;
 }
 
+function getAvailableEthernets(cell)
+{
+	var eths = [];
+	for (var i = 0; i < NUM_INTERFACES; i++) {
+		eths.push(i);
+	}console.log(eths);
+	for (var j = 0; j < cell.getEdgeCount(); j++) {
+		var ethId = cell.getEdgeAt(j).value.ethernet;
+		console.log(ethId);
+		for(var m=0; m<eths.length;m++)
+		{
+			if(eths[m] == ethId)
+			{
+				eths.remove(m);
+				break;
+			}
+		}
+		console.log(eths);
+	}
+	return eths;
+}
+
 function getValidName(name)
 {
 	var count = 0;

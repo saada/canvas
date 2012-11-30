@@ -158,20 +158,13 @@ function main(container, toolbar, sidebar, status)
 			}
 			else if(cell.isEdge())
 			{
-				var eths = [];
-				for (var i = 0; i < NUM_INTERFACES; i++) {
-					eths.push(i);
-				}
-
-				for (var j = 0; j < source.getEdgeCount(); j++) {
-					eths.remove(eths.indexOf(source.getEdgeAt(j).value.ethernet));
-				}
-				cell.setValue({
-								ethernet:eths[0],
-								ip:"192.168.2.1",
-								netmask:"255.255.255.0",
-								gateway:"172.168.0.1"
-							});
+				var eths = getAvailableEthernets(source);
+				cell.setValue(new Interface(
+								eths[0],
+								"192.168.2.1",
+								"255.255.255.0",
+								"172.168.0.1"
+							));
 				console.log("***Adding edge...");
 				console.log(cell);
 			}
@@ -532,40 +525,13 @@ function showProperties(graph, cell){
 	// Creates a form for the user object inside
 	// the cell
 	var form = new mxForm('configure');
-	var edgeFields = [];
 
-	if(cell.isVertex()){
+	if(cell.isVertex())
+	{
 		// Adds a field for the columnname
 		//var id = form.addText('id', cell.id);
 		var nameField = form.addText('Name', cell.value.name);
 		var typeField = form.addText('Type', cell.value.type);
-
-		// Show interfaces and their edge terminals
-		var edgeCount = cell.getEdgeCount();
-
-		for (var i = 0; i < edgeCount; i++) {
-			var edge = cell.getEdgeAt(i);
-			var terminal = edge.getTerminal();
-			var source = edge.getTerminal(true);
-			if(terminal !== null && terminal.id != cell.id)
-			{
-				if(cell.value.type == 'Client')
-					edgeFields.push(
-					{
-						interfaceId:form.addText("InterfaceId to "+terminal.value.name, "eth0"),
-						ip:form.addText("IP address to "+terminal.value.name, "192.168.0.1"),
-						netmask:form.addText("Netmask to "+terminal.value.name, "255.255.255.0"),
-						gateway:form.addText("Gateway to "+terminal.value.name, "192.168.1.1")
-					});
-				else if (cell.value.type == 'Switch')
-				{
-					edgeFields.push(
-					{
-						vlan:form.addText("VLAN to "+terminal.value.name, "VLAN"+i)
-					});
-				}
-			}
-		}
 
 		var wnd = null;
 		// Defines the function to be executed when the
@@ -584,22 +550,6 @@ function showProperties(graph, cell){
 			//clone.id = id.value;
 			clone.label = '<img src="images/icons48/'+clone.type.toLowerCase()+'.png" width="48" height="48"><br>'+
 							'<h1 style="margin:0px;">'+clone.name+'</h1>';
-			clone.edgeFields = [];
-
-			function Interface(interfaceId, ip, netmask, gateway){
-				this.interfaceId = interfaceId;
-				this.ip = ip;
-				this.netmask = netmask;
-				this.gateway = gateway;
-			}
-
-			for (var i = 0; i < edgeFields.length; i++) {
-				var tmp = new Interface(edgeFields[i].interfaceId.value,
-									edgeFields[i].ip.value,
-									edgeFields[i].netmask.value,
-									edgeFields[i].gateway.value);
-				clone.edgeFields.push(tmp);
-			}
 
 			graph.model.beginUpdate();
 			graph.model.setValue(cell, clone);
@@ -616,22 +566,38 @@ function showProperties(graph, cell){
 	}
 	else if(cell.isEdge())
 	{
-		// var sourceName = form.addText('SourceName', cell.getTerminal(true).value.name);
-		// var sourceInterface = form.addText('SourceInterface', cell.getTerminal(true).value.interface);
-		// var targetName = form.addText('TargetName', cell.getTerminal().value.name);
-		// var targetInterface = form.addText('TargetInterface', cell.getTerminal().value.interface);
-		var comboSize = NUM_INTERFACES-cell.getTerminal(true).getEdgeCount();
+		var source = cell.getTerminal(true);
+		var eths = getAvailableEthernets(source);
 		var ethernet = form.addCombo("ethernet",false,1);
-		form.addOption(ethernet,"","",true);
-		for (var x = 0; x < comboSize; x++) {
-			form.addOption(ethernet,"eth"+x,"eth"+x,false);
+		form.addOption(ethernet,"eth"+cell.value.ethernet,cell.value.ethernet,true);
+		// eths.remove(eths.indexOf(cell.value.ethernet));
+		for (var x = 0; x < eths.length; x++) {
+			form.addOption(ethernet,"eth"+eths[x],eths[x],false);
 		}
-		var netmaskField = form.addText('Netmask',"255.255.255.0");
+		var ipField = form.addText('IP Address',cell.value.ip);
+		var netmaskField = form.addText('Netmask',cell.value.netmask);
+		var gatewayField = form.addText('Gateway',cell.value.gateway);
+
+		var okFunction = function(){
+			var clone = mxUtils.clone(cell.value);
+			console.log(ethernet.value);
+			clone = new Interface(ethernet.value,ipField.value,netmaskField.value,gatewayField.value);
+			graph.model.beginUpdate();
+			graph.model.setValue(cell, clone);
+			graph.model.endUpdate();
+			wnd.destroy();
+		};
+
+		var cancelFunction = function(){
+			wnd.destroy();
+		};
+
+		form.addButtons(okFunction, cancelFunction);
 		// LATER ON I WANNA SAVE THE TEXT USING SETATTRIBUTE
 		// cell.setAttribute("dude","dude");
 
 	}
-	wnd = showModalWindow(graph,name,form.table, 300, 200+80*edgeFields.length);
+	wnd = showModalWindow(graph,name,form.table, 300, 200);
 }
 
 //check whether all icons are connected

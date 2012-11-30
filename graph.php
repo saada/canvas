@@ -75,3 +75,4 @@
 <script src="js/Router.js"></script>
 <script src="js/Internet.js"></script>
 <script src="js/Client.js"></script>
+<script src="js/Interface.js"></script>
