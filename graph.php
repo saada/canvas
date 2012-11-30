@@ -29,7 +29,7 @@
 	<div id="toolbarContainer"
 		style="position:absolute;white-space:nowrap;top:0px;left:0px;max-height:24px;height:36px;right:0px;padding:6px;background-image:url('images/toolbar_bg.gif');">
 		<select id="graphList"></select>​
-    	<button id="clearBtn">Clear Graph</button>
+		<button id="clearBtn">Clear Graph</button>
     	<button id="deleteBtn">Delete Graph</button>
     	<button id="loadBtn">Load Graph</button>
 	</div>
@@ -45,7 +45,7 @@
 		<!-- Creates a container for the splash screen -->
 		<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;opacity:0.8;">
 			<center style="padding-top:230px;">
-				<img src="images/ajax-loader.gif">
+				<img src="images/terry.gif">
 			</center>
 		</div>
 	</div>
