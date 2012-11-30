@@ -25,13 +25,6 @@
 <!-- Page passes the container for the graph to the grogram -->
 <body>
 
-	<!-- Creates a container for the splash screen -->
-	<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;opacity:0.8;">
-		<center style="padding-top:230px;">
-			<img src="images/ajax-loader.gif">
-		</center>
-	</div>
-
 	<!-- Creates a container for the sidebar -->
 	<div id="toolbarContainer"
 		style="position:absolute;white-space:nowrap;top:0px;left:0px;max-height:24px;height:36px;right:0px;padding:6px;background-image:url('images/toolbar_bg.gif');">
@@ -49,6 +42,12 @@
 	<!-- Creates a container for the graph -->
 	<div id="graphContainer"
 		style="position:absolute;top:36px;left:60px;bottom:0px;right:0px;background-image:url('editors/images/grid.gif');cursor:default;">
+		<!-- Creates a container for the splash screen -->
+		<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;opacity:0.8;">
+			<center style="padding-top:230px;">
+				<img src="images/ajax-loader.gif">
+			</center>
+		</div>
 	</div>
 
 </body>
