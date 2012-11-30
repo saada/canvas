@@ -89,7 +89,7 @@ function main(container, toolbar, sidebar, status)
 						for (var i = 0; i < cell.getTerminal(true).getEdgeCount(); i++) {
 							if(cell.getTerminal(true).getEdgeAt(i) == cell)
 							{
-								return "eth"+i+":"+cell.value;
+								return "eth"+cell.value.ethernet+":"+cell.value.ip;
 							}
 						}
 					}
@@ -158,7 +158,22 @@ function main(container, toolbar, sidebar, status)
 			}
 			else if(cell.isEdge())
 			{
-				cell.setValue("192.168.2.1");
+				var eths = [];
+				for (var i = 0; i < NUM_INTERFACES; i++) {
+					eths.push(i);
+				}
+
+				for (var j = 0; j < source.getEdgeCount(); j++) {
+					eths.remove(eths.indexOf(source.getEdgeAt(j).value.ethernet));
+				}
+				cell.setValue({
+								ethernet:eths[0],
+								ip:"192.168.2.1",
+								netmask:"255.255.255.0",
+								gateway:"172.168.0.1"
+							});
+				console.log("***Adding edge...");
+				console.log(cell);
 			}
 			return mxGraph.prototype.addCell.apply(this, arguments);
 
@@ -605,6 +620,16 @@ function showProperties(graph, cell){
 		// var sourceInterface = form.addText('SourceInterface', cell.getTerminal(true).value.interface);
 		// var targetName = form.addText('TargetName', cell.getTerminal().value.name);
 		// var targetInterface = form.addText('TargetInterface', cell.getTerminal().value.interface);
+		var comboSize = NUM_INTERFACES-cell.getTerminal(true).getEdgeCount();
+		var ethernet = form.addCombo("ethernet",false,1);
+		form.addOption(ethernet,"","",true);
+		for (var x = 0; x < comboSize; x++) {
+			form.addOption(ethernet,"eth"+x,"eth"+x,false);
+		}
+		var netmaskField = form.addText('Netmask',"255.255.255.0");
+		// LATER ON I WANNA SAVE THE TEXT USING SETATTRIBUTE
+		// cell.setAttribute("dude","dude");
+
 	}
 	wnd = showModalWindow(graph,name,form.table, 300, 200+80*edgeFields.length);
 }
