@@ -259,7 +259,7 @@ function main(container, toolbar, sidebar, status)
 		// Defines the icon configure action
 		editor.addAction('configure', function(editor, cell)
 		{
-			if (cell === null)
+			if (typeof(cell) == 'undefined')
 			{
 				cell = graph.getSelectionCell();
 			}
