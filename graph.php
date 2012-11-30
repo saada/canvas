@@ -26,13 +26,10 @@
 <body>
 
 	<!-- Creates a container for the splash screen -->
-	<div id="loadSplash">
-		<div id="splash"
-		style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;opacity:0.8;">
-		<center id="splash" style="padding-top:230px;">
+	<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;opacity:0.8;">
+		<center style="padding-top:230px;">
 			<img src="images/ajax-loader.gif">
 		</center>
-		</div>
 	</div>
 
 	<!-- Creates a container for the sidebar -->
