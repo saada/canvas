@@ -64,6 +64,9 @@ function main(container, toolbar, sidebar, status)
 		// Enables new connections
 		graph.setConnectable(true);
 
+		//disable tooltips
+		graph.setTooltips(false);
+
 		// Disables HTML labels for swimlanes to avoid conflict
 		// for the event processing on the child cells. HTML
 		// labels consume events before underlying cells get the
@@ -95,6 +98,10 @@ function main(container, toolbar, sidebar, status)
 					}
 					return "";
 					// return cell.getTerminal(false).value.edgeFields
+				}
+				else(cell.isVertex())
+				{
+					// Generate the label with icon and name
 				}
 				return cell.value.label;
 			}
