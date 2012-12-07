@@ -144,6 +144,11 @@ function main(container, toolbar, sidebar, status)
 		model.cellAdded = function(cell){
 			if(cell.isVertex())
 			{
+				var validName = getValidName(cell.value.name);
+				cell.value.name = validName;
+				cell.value.label = '<img src="images/icons48/'+cell.value.type.toLowerCase()+'.png" width="48" height="48">'+
+									'<h1 style="margin:0px;">'+validName+'</h1>';
+				console.log("***Adding cell...");
 				CELLS.push(cell.value.name);
 				console.log("***Cell added!");
 				console.log(CELLS);
@@ -157,11 +162,7 @@ function main(container, toolbar, sidebar, status)
 		//on drag and drop new cell
 		graph.addCell = function(cell,parent,index,source,target){
 			if(cell.isVertex()){
-				var validName = getValidName(cell.value.name);
-				cell.value.name = validName;
-				cell.value.label = '<img src="images/icons48/'+cell.value.type.toLowerCase()+'.png" width="48" height="48">'+
-									'<h1 style="margin:0px;">'+validName+'</h1>';
-				console.log("***Adding cell...");
+
 			}
 			else if(cell.isEdge())
 			{
@@ -174,6 +175,7 @@ function main(container, toolbar, sidebar, status)
 							));
 				console.log("***Adding edge...");
 				console.log(cell);
+				console.log("***Edge added!");
 			}
 			return mxGraph.prototype.addCell.apply(this, arguments);
 
