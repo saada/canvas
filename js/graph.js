@@ -87,7 +87,7 @@ function main(container, toolbar, sidebar, status)
 			if(cell.value!==null){
 				if(cell.isEdge())
 				{
-					if(cell.getTerminal().value.type == "Switch")
+					if(cell.getTerminal().value.type == "switch")
 					{
 						for (var i = 0; i < cell.getTerminal(true).getEdgeCount(); i++) {
 							if(cell.getTerminal(true).getEdgeAt(i) == cell)
@@ -103,7 +103,7 @@ function main(container, toolbar, sidebar, status)
 				{
 					// Generate the label with icon and name
 				}
-				return cell.value.label;
+				return cell.value.name;
 			}
 			return mxGraph.prototype.getLabel.apply(this,arguments);
 		};
@@ -111,15 +111,15 @@ function main(container, toolbar, sidebar, status)
 
 		//Prevent and validate edge connections
 		graph.getEdgeValidationError  = function(edge, source, target){
-			if(source.value.type != 'Switch' &&
-				target.value.type == 'Switch' &&
+			if(source.value.type != 'switch' &&
+				target.value.type == 'switch' &&
 				source.getEdgeCount() < NUM_INTERFACES &&	//Anything not a switch
 				!edgeExists(source,target)					//Prevent duplicate edges
 				)
 			{
 				return mxGraph.prototype.getEdgeValidationError.apply(this, arguments); // "supercall"
 			}
-			if(source.value.type == "Switch")
+			if(source.value.type == "switch")
 				return "Switch cannot target other elements!";
 			else
 				return source.value.type+" must target any disconnected Switch!";
@@ -145,10 +145,9 @@ function main(container, toolbar, sidebar, status)
 			if(cell.isVertex())
 			{
 				cell.value.name = getValidName(cell.value.name);
-				cell.value.label = '<img src="images/icons48/'+cell.value.type.toLowerCase()+'.png" width="48" height="48">'+
-									'<h1 style="margin:0px;">'+cell.value.name+'</h1>';
 				console.log("***Adding cell...");
 				CELLS.push(cell.value.name);
+				console.log(cell);
 				console.log("***Cell added!");
 				console.log(CELLS);
 			}
@@ -184,55 +183,34 @@ function main(container, toolbar, sidebar, status)
 		// Adds all required styles to the graph (see below)
 		configureStylesheet(graph);
 
-		// Adds sidebar icon.
-		var ClientObject = new Client('myClient');
-		var client = new mxCell(ClientObject,new mxGeometry(0,0,150,150));
-		client.setVertex(true);
-		client.setConnectable(true);
+		var tmpCell = new mxCell(null, new mxGeometry(0,0,140,140));
+		tmpCell.setVertex(true);
+		tmpCell.setConnectable(true);
 
-		client.value.type = 'Client';
-		client.value.ip = '192.168.1.1';
-		addSidebarIcon(graph, sidebar,client,'images/icons48/client.png');
+		tmpCell = mxUtils.clone(tmpCell);
+		tmpCell.setValue(new Client('myClient'));
+		tmpCell.setStyle(tmpCell.value.type);
+		addSidebarIcon(graph, sidebar,tmpCell,'images/icons48/'+tmpCell.value.type+'2.png');
 
-		// Adds sidebar icon.
-		var InternetObject = new Internet('myInternet');
-		var internet = new mxCell(InternetObject,new mxGeometry(0,0,150,150));
-		internet.setVertex(true);
-		internet.setConnectable(true);
+		tmpCell = mxUtils.clone(tmpCell);
+		tmpCell.setValue(new Internet('myInternet'));
+		tmpCell.setStyle(tmpCell.value.type);
+		addSidebarIcon(graph, sidebar,tmpCell,'images/icons48/'+tmpCell.value.type+'2.png');
 
-		internet.value.type = 'Internet';
-		internet.value.ip = '192.168.1.1';
-		addSidebarIcon(graph, sidebar,internet,'images/icons48/internet.png');
+		tmpCell = mxUtils.clone(tmpCell);
+		tmpCell.setValue(new Router('myRouter'));
+		tmpCell.setStyle(tmpCell.value.type);
+		addSidebarIcon(graph, sidebar,tmpCell,'images/icons48/'+tmpCell.value.type+'2.png');
 
-		// Adds sidebar icon.
-		var RouterObject = new Router('myRouter');
-		var router = new mxCell(RouterObject,new mxGeometry(0,0,150,150));
-		router.setVertex(true);
-		router.setConnectable(true);
+		tmpCell = mxUtils.clone(tmpCell);
+		tmpCell.setValue(new Server('myServer'));
+		tmpCell.setStyle(tmpCell.value.type);
+		addSidebarIcon(graph, sidebar,tmpCell,'images/icons48/'+tmpCell.value.type+'2.png');
 
-		router.value.type = 'Router';
-		router.value.ip = '192.168.1.1';
-		addSidebarIcon(graph,sidebar,router,'images/icons48/router.png');
-
-		//Adds sidebar icon
-		var ServerObject = new Server('myServer');
-		var server= new mxCell(ServerObject,new mxGeometry(0,0,150,150));
-		server.setVertex(true);
-		server.setConnectable(true);
-
-		server.value.type = 'Server';
-		server.value.ip = '192.168.1.1';
-		addSidebarIcon(graph,sidebar,server,'images/icons48/server.png');
-
-		//Adds sidebar icon
-		var SwitchObject = new Switch('mySwitch');
-		var sw= new mxCell(SwitchObject,new mxGeometry(0,0,150,150));
-		sw.setVertex(true);
-		sw.setConnectable(true);
-
-		sw.value.type = 'Switch';
-		sw.value.ip = '192.168.1.1';
-		addSidebarIcon(graph,sidebar,sw,'images/icons48/switch.png');
+		tmpCell = mxUtils.clone(tmpCell);
+		tmpCell.setValue(new Switch('mySwitch'));
+		tmpCell.setStyle(tmpCell.value.type);
+		addSidebarIcon(graph, sidebar,tmpCell,'images/icons48/'+tmpCell.value.type+'2.png');
 
 		// Defines a new export action
 		editor.addAction('export', function(editor, cell)
@@ -489,7 +467,7 @@ function addSidebarIcon(graph, sidebar, prototype, image)
 	img.setAttribute('src', image);
 	img.style.width = '48px';
 	img.style.height = '48px';
-	img.title = 'Drag this to the diagram to create a new vertex';
+	img.title = 'Drag this to the diagram to create a new '+prototype.value.type+'cell.';
 	sidebar.appendChild(img);
 
 	// Creates the image which is used as the drag icon (preview)
@@ -501,26 +479,66 @@ function addSidebarIcon(graph, sidebar, prototype, image)
 function configureStylesheet(graph)
 {
 	var style = {};
-	style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
-	style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
+
+	//VERTEX STYLE
+	// style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
+	style[mxConstants.STYLE_PERIMETER] = mxConstants.PERIMETER_ELLIPSE;
 	style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-	style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
+	// style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
 	style[mxConstants.STYLE_GRADIENTCOLOR] = '#41B9F5';
 	style[mxConstants.STYLE_FILLCOLOR] = '#8CCDF5';
 	style[mxConstants.STYLE_STROKECOLOR] = '#1B78C8';
+	style[mxConstants.STYLE_ROUNDED] = false;
+	// style[mxConstants.STYLE_OPACITY] = '80';
+
+	//LABEL STYLES
+	style[mxConstants.STYLE_VERTICAL_LABEL_POSITION] = mxConstants.ALIGN_BOTTOM;
+	// style[mxConstants.STYLE_VERTICAL_LABEL_POSITION] = mxConstants.ALIGN_MIDDLE;
+	style[mxConstants.STYLE_SPACING_BOTTOM] = '140';
 	style[mxConstants.STYLE_FONTCOLOR] = '#000000';
-	style[mxConstants.STYLE_ROUNDED] = true;
-	style[mxConstants.STYLE_OPACITY] = '80';
-	style[mxConstants.STYLE_FONTSIZE] = '12';
-	style[mxConstants.STYLE_FONTSTYLE] = 0;
-	style[mxConstants.STYLE_IMAGE_WIDTH] = '48';
-	style[mxConstants.STYLE_IMAGE_HEIGHT] = '48';
+	style[mxConstants.STYLE_FONTSIZE] = '16';
+	style[mxConstants.STYLE_FONTSTYLE] = 1;
+	style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = "#FFFFFF";
+
+	//IMAGE STYLES
+	style[mxConstants.STYLE_IMAGE_ASPECT] = 0;	//do not preserve aspect
+	style[mxConstants.STYLE_IMAGE_WIDTH] = '24';
+	style[mxConstants.STYLE_IMAGE_HEIGHT] = '24';
+	// style[mxConstants.STYLE_IMAGE_BACKGROUND] = "#8CCDF5";
+	// style[mxConstants.STYLE_IMAGE_BORDER] = "#1B78C8";
 	graph.getStylesheet().putDefaultVertexStyle(style);
 
+	//Apply all icon styles
+	style = mxUtils.clone(style);
+	//client
+	style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_IMAGE;
+	style[mxConstants.STYLE_IMAGE] = 'images/icons48/client2.png';
+	graph.getStylesheet().putCellStyle('client', style);
+	//internet
+	style = mxUtils.clone(style);
+	style[mxConstants.STYLE_IMAGE] = 'images/icons48/internet2.png';
+	graph.getStylesheet().putCellStyle('internet', style);
+	//router
+	style = mxUtils.clone(style);
+	style[mxConstants.STYLE_IMAGE] = 'images/icons48/router2.png';
+	graph.getStylesheet().putCellStyle('router', style);
+	//server
+	style = mxUtils.clone(style);
+	style[mxConstants.STYLE_IMAGE] = 'images/icons48/server2.png';
+	graph.getStylesheet().putCellStyle('server', style);
+	//switch
+	style = mxUtils.clone(style);
+	style[mxConstants.STYLE_IMAGE] = 'images/icons48/switch2.png';
+	graph.getStylesheet().putCellStyle('switch', style);
+
+	//EDGE STYLE
 	style = graph.getStylesheet().getDefaultEdgeStyle();
 	style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#FFFFFF';
 	style[mxConstants.STYLE_STROKEWIDTH] = '2';
 	style[mxConstants.STYLE_ROUNDED] = true;
+	graph.getStylesheet().putDefaultEdgeStyle(style);
+
+
 }
 
 function showProperties(graph, cell){

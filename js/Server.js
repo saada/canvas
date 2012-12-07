@@ -2,18 +2,7 @@
 function Server(name)
 {
 	this.name = name;
-	if(typeof(name) != 'undefined')
-		this.label = '<img src="images/icons48/server.png" width="48" height="48">'+
-						'<h1 style="margin:0px;">'+name+'</h1>';
+	this.type = 'server';
+	this.label = name;
+	this.clone = function(){return mxUtils.clone(this);};
 }
-
-Server.prototype.type = null;
-
-Server.prototype.ip = null;
-
-Server.prototype.label = '<img src="images/icons48/server.png" width="48" height="48">'+
-						'<h1 style="margin:0px;">Server</h1>';
-Server.prototype.clone = function()
-{
-	return mxUtils.clone(this);
-};
