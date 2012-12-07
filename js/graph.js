@@ -474,12 +474,6 @@ function addSidebarIcon(graph, sidebar, prototype, image)
 			//v1.setConnectable(true);
 			v1.geometry.x = pt.x;
 			v1.geometry.y = pt.y;
-			// var validName = v1.value.name;
-			// var validName = getValidName(v1.value.name);
-			// v1.value.name = validName;
-			// v1.value.label = '<img src="images/icons48/'+v1.value.type.toLowerCase()+'.png" width="48" height="48">'+
-			// '<h1 style="margin:0px;">'+validName+'</h1>';
-			// console.log(v1);
 			graph.addCell(v1, parent);
 		}
 		finally
