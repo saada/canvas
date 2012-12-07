@@ -1,5 +1,4 @@
 TODO NOW:
- ☐ Fix COPY PASTE name error
  ☐ Fix EDGE inaccurate error messages
  ☐ Remove HTML code from XML and generate it dynamically at runtime.
  ☐ change the cell configuration TYPE to dropdown
@@ -9,6 +8,7 @@ FUTURE MODIFICATIONS:
  ☐
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Fix COPY PASTE name error @done (12-12-06 19:17)
  ✔ Column that shows all the labs the student is enrolled in on the left hand side of the canvas. @done (12-12-06 18:37)
  ✔ Also show the graphs that are within the selected lab @done (12-12-06 18:37)
  ✔ Components can only attach to a SWITCH (VLAN).\ @done (12-12-06 18:37)
