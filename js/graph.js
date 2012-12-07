@@ -551,29 +551,47 @@ function showProperties(graph, cell){
 		// Adds a field for the columnname
 		//var id = form.addText('id', cell.id);
 		var nameField = form.addText('Name', cell.value.name);
-		var typeField = form.addText('Type', cell.value.type);
+		var typeField = form.addCombo('Type', false, 1);
+		form.addOption(typeField,'client','client',(cell.value.type=='client'));
+		form.addOption(typeField,'internet','internet',(cell.value.type=='internet'));
+		form.addOption(typeField,'router','router',(cell.value.type=='router'));
+		form.addOption(typeField,'server','server',(cell.value.type=='server'));
+		form.addOption(typeField,'switch','switch',(cell.value.type=='switch'));
 
 		var wnd = null;
 		// Defines the function to be executed when the
 		// OK button is pressed in the dialog
 		var okFunction = function()
 		{
-			var clone = mxUtils.clone(cell.value);
+			var clone = null;
+			var type = typeField.value;
 
+			console.log(cell.value);
 			CELLS.remove(CELLS.indexOf(cell.value.name));
-			clone.name = getValidName(nameField.value);
+
+			if(type == "switch")
+				clone = new Switch(getValidName(nameField.value));
+			else if(type == "router")
+				clone = new Router(getValidName(nameField.value));
+			else if(type == "server")
+				clone = new Server(getValidName(nameField.value));
+			else if(type == "client")
+				clone = new Client(getValidName(nameField.value));
+			else if(type == "internet")
+				clone = new Internet(getValidName(nameField.value));
+
 			CELLS.push(clone.name);
 			console.log(CELLS);
 
-			clone.type = typeField.value;
-			// clone.ip = ipField.value;
-			//clone.id = id.value;
-			clone.label = '<img src="images/icons48/'+clone.type.toLowerCase()+'.png" width="48" height="48"><br>'+
-							'<h1 style="margin:0px;">'+clone.name+'</h1>';
-
 			graph.model.beginUpdate();
-			graph.model.setValue(cell, clone);
-			graph.model.endUpdate();
+			try{
+				graph.model.setStyle(cell, clone.type);
+				graph.model.setValue(cell,clone);
+			}
+			finally
+			{
+				graph.model.endUpdate();
+			}
 			// debugPrintCells(graph);
 			wnd.destroy();
 		};
