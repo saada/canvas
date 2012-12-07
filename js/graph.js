@@ -111,18 +111,32 @@ function main(container, toolbar, sidebar, status)
 
 		//Prevent and validate edge connections
 		graph.getEdgeValidationError  = function(edge, source, target){
-			if(source.value.type != 'switch' &&
-				target.value.type == 'switch' &&
-				source.getEdgeCount() < NUM_INTERFACES &&	//Anything not a switch
-				!edgeExists(source,target)					//Prevent duplicate edges
-				)
+			if(source.getId() != target.getId())
 			{
-				return mxGraph.prototype.getEdgeValidationError.apply(this, arguments); // "supercall"
+				if(source.value.type != 'switch')
+				{
+					if(target.value.type == 'switch')
+					{
+						if(source.getEdgeCount() < NUM_INTERFACES)	//Anything not a switch
+						{
+							if(!edgeExists(source,target))					//Prevent duplicate edges
+							{
+								return mxGraph.prototype.getEdgeValidationError.apply(this, arguments); // "supercall"
+							}
+							else
+								return "Already connected!";
+						}
+						else
+							return "No more interfaces available for "+source.value.name+"!";
+					}
+					else
+						return "Target must be a Switch!";
+				}
+				else
+					return "Switch cannot target other elements!";
 			}
-			if(source.value.type == "switch")
-				return "Switch cannot target other elements!";
 			else
-				return source.value.type+" must target any disconnected Switch!";
+				return "Element cannot target itself!";
 		};
 
 		model.cellRemoved = function(cell){
@@ -467,7 +481,7 @@ function addSidebarIcon(graph, sidebar, prototype, image)
 	img.setAttribute('src', image);
 	img.style.width = '48px';
 	img.style.height = '48px';
-	img.title = 'Drag this to the diagram to create a new '+prototype.value.type+'cell.';
+	img.title = 'Drag this to the diagram to create a new '+prototype.value.type+' cell.';
 	sidebar.appendChild(img);
 
 	// Creates the image which is used as the drag icon (preview)

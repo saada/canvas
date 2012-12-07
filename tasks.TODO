@@ -1,11 +1,11 @@
 TODO NOW:
- ☐ Fix EDGE inaccurate error messages
 
 --- ✄ -----------------------
 FUTURE MODIFICATIONS:
  ☐
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Fix EDGE inaccurate error messages @done (12-12-07 00:29)
  ✔ change the cell configuration TYPE to dropdown @done (12-12-07 00:08)
  ✔ Remove HTML code from XML and generate it dynamically at runtime. @done (12-12-06 23:29)
  ✔ Fix COPY PASTE name error @done (12-12-06 19:17)

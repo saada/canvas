@@ -42,7 +42,7 @@ function addGraph(name, xml)
 		success:function(result){
 			console.log("===DEBUG=== addGraph()");
 			console.log(result);
-			alert("Successfully added graph: "+result.name+". Id="+result.gid);
+			alert("Successfully added "+result.name+"!");
 			$("#graphList")
 				.append('<option value="'+result.gid+'">'+result.name+'</option>')
 				.val(result.gid);
@@ -118,8 +118,11 @@ function deleteGraph()
 
 function loadGraph()
 {
-	startLoadingScreen();
-	initLoad(getGraphById($('#graphList').val()));	//on change, change graph with selection from dropdown
+	if($('#graphList').children("option").length > 0)
+	{
+		startLoadingScreen();
+		initLoad(getGraphById($('#graphList').val()));	//on change, change graph with selection from dropdown
+	}
 }
 
 function edgeExists(source,target)
