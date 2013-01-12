@@ -1,12 +1,12 @@
 <?php
 	//Require the ActiveRecord class
-	require_once 'ActiveRecord/php-activerecord/ActiveRecord.php';
+	require_once 'libs/ActiveRecord/php-activerecord/ActiveRecord.php';
 
 	//Set the database configuration and connection
-	include('ActiveRecord/Configuration.php');
+	include('libs/ActiveRecord/Configuration.php');
 
 	//Include models
-	include('ActiveRecord/models/GraphModel.php');
+	include('libs/ActiveRecord/models/GraphModel.php');
 
 	function arToJson($data, $options = null) {
 		$out = "[";
@@ -54,16 +54,16 @@
 		return Graph::find_by_gid($gid)->delete();
 	}
 
-	if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])) {
-	    $action = $_REQUEST['action'];
+	if(isset($_POST['action']) && !empty($_POST['action'])) {
+	    $action = $_POST['action'];
 	    switch($action) {
 
 	        case 'addGraph' :
 	        {
-	        	if(isset($_REQUEST['name']) && !empty($_REQUEST['name'])
-	        		&& isset($_REQUEST['xml']) && !empty($_REQUEST['xml']))
+	        	if(isset($_POST['name']) && !empty($_POST['name'])
+	        		&& isset($_POST['xml']) && !empty($_POST['xml']))
         		{
-        			$returnValue = addGraph($_REQUEST['name'],$_REQUEST['xml']);
+        			$returnValue = addGraph($_POST['name'],$_POST['xml']);
         			if($returnValue != null)
         			{
         				echo $returnValue;
@@ -75,9 +75,9 @@
 
 	        case 'deleteGraph' :
 	        {
-	        	if(isset($_REQUEST['gid']) && !empty($_REQUEST['gid']))
+	        	if(isset($_POST['gid']) && !empty($_POST['gid']))
         		{
-        			$returnValue = deleteGraph($_REQUEST['gid']);
+        			$returnValue = deleteGraph($_POST['gid']);
         			// if($returnValue != null)
         			// {
         				echo $returnValue;
@@ -90,9 +90,9 @@
 
 	        case 'getGraph' :
 	        {
-	        	if(isset($_REQUEST['name']) && !empty($_REQUEST['name']))
+	        	if(isset($_POST['name']) && !empty($_POST['name']))
         		{
-        			$returnValue = getGraph($_REQUEST['name']);
+        			$returnValue = getGraph($_POST['name']);
         			if($returnValue != null)
         			{
         				echo $returnValue;
@@ -104,9 +104,9 @@
 
 	        case 'getGraphById' :
 	        {
-	        	if(isset($_REQUEST['gid']) && !empty($_REQUEST['gid']))
+	        	if(isset($_POST['gid']) && !empty($_POST['gid']))
         		{
-        			$returnValue = getGraphById($_REQUEST['gid']);
+        			$returnValue = getGraphById($_POST['gid']);
         			if($returnValue != null)
         			{
         				echo $returnValue;

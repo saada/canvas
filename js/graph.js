@@ -56,7 +56,7 @@ function main(container, toolbar, sidebar, status)
 		//graph.ingnoreScrollbars = true;
 
 		var config = mxUtils.load(
-		'editors/config/keyhandler-commons.xml').
+		'./config/keyhandler-commons.xml').
 				getDocumentElement();
 		editor.configure(config);
 

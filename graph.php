@@ -41,7 +41,7 @@
 
 	<!-- Creates a container for the graph -->
 	<div id="graphContainer"
-		style="position:absolute;top:36px;left:60px;bottom:0px;right:0px;background-image:url('editors/images/grid.gif');cursor:default;">
+		style="position:absolute;top:36px;left:60px;bottom:0px;right:0px;background-image:url('./images/grid.gif');cursor:default;">
 		<!-- Creates a container for the splash screen -->
 		<div id="splash" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;opacity:0.8;">
 			<center style="padding-top:230px;">
@@ -54,11 +54,11 @@
 </html>
 <!-- Sets the basepath for the library if not in same directory -->
 <script type="text/javascript">
-	mxBasePath = '../src';
+	mxBasePath = './libs/jGraph';
 </script>
 
 <!-- Loads and initializes the library -->
-<script type="text/javascript" src="../src/js/mxClient.js"></script>
+<script type="text/javascript" src="./libs/jGraph/js/mxClient.js"></script>
 
 <!-- Include graph javascript -->
 <script type="text/javascript" src="js/graph.js"></script>
