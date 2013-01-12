@@ -15,7 +15,7 @@
 	}
 
 	function showGraph($width,$height){
-		echo '<iframe id="myGraph" src="https://vlab.asu.edu/canvas/canvas/graph.php?lab_id=548" '
+		echo '<iframe id="myGraph" src="./canvas/graph.php" '
 			.'width="'.$width.'" height="'.$height.'"></iframe>';
 	}
 

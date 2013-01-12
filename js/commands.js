@@ -7,7 +7,7 @@ $(document).ready(function(){
 // <AJAX>
 function loadGraphs(){
 	$.ajax({
-		url: "/canvas/canvas/commands.php",
+		url: "/canvas/commands.php",
 		type: "POST",
 		data: {action : "getAllGraphs"},
 		dataType: "json",
@@ -35,7 +35,7 @@ function loadGraphs(){
 function addGraph(name, xml)
 {
 	$.ajax({
-		url: "/canvas/canvas/commands.php",
+		url: "/canvas/commands.php",
 		type: "POST",
 		data: {action : "addGraph", name: name, xml: xml},
 		dataType: "json",
@@ -57,7 +57,7 @@ function getGraph(name)
 {
 	var myGraph = null;
 	$.ajax({
-		url: "/canvas/canvas/commands.php",
+		url: "/canvas/commands.php",
 		type: "POST",
 		data: {action : "getGraph", name: name},
 		dataType: "json",
@@ -77,7 +77,7 @@ function getGraphById(gid)
 {
 	var myGraph = null;
 	$.ajax({
-		url: "/canvas/canvas/commands.php",
+		url: "/canvas/commands.php",
 		type: "POST",
 		data: {action : "getGraphById", gid: gid},
 		dataType: "json",
@@ -97,7 +97,7 @@ function deleteGraph()
 {
 	gid = $('#graphList').val();
 	$.ajax({
-		url: "/canvas/canvas/commands.php",
+		url: "/canvas/commands.php",
 		type: "POST",
 		data: {action : "deleteGraph", gid: gid},
 		async: true,
