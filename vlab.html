@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+	<head>
+		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+	</head>
+	<body>
+		<div id="graphWidget" class=""></div>
+		
+		<script src="js/vendors/jquery-1.9.0.min.js"></script>
+		<script src="js/vendors/zoomooz.min.js"></script>
+		<!-- Load Widgets -->
+		<script>
+			$(function() {
+				$("#graphWidget").load("graph.html", function(response, status, xhr) {
+					if (status == "error") {
+						var msg = "Sorry but there was an error: ";
+						$("#error").html(msg + xhr.status + " " + xhr.statusText);
+					}
+					else
+					{
+						$("#graphWidget").addClass('zoomTarget');
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

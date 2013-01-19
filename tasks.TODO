@@ -1,10 +1,19 @@
 TODO NOW:
+ ☐ Set up widgets
+ ☐ Incorporate zooming capability
+ ☐ Set up backbone
+   ☐ Collections
+   ☐ Models
+   ☐ Views
+   ☐ Routers
+ ☐ Implement RESTful WebServices
 
 --- ✄ -----------------------
 FUTURE MODIFICATIONS:
  ☐
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Refactor canvas to set up vlab layout with widgets @done (13-01-18 18:01)
  ✔ Fix EDGE inaccurate error messages @done (12-12-07 00:29)
  ✔ change the cell configuration TYPE to dropdown @done (12-12-07 00:08)
  ✔ Remove HTML code from XML and generate it dynamically at runtime. @done (12-12-06 23:29)
