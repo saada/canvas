@@ -1,7 +1,7 @@
 TODO NOW:
  ☐ Set up widgets
  ☐ Incorporate zooming capability
- ☐ Set up backbone
+ ☐ Set up backbone (Checkout RequireJS and Backbone repo)
    ☐ Collections
    ☐ Models
    ☐ Views
