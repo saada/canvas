@@ -21,8 +21,8 @@ function loadGraphs(){
 		data: {action : "getAllGraphs"},
 		dataType: "json",
 		success:function(result){
-			console.log("===DEBUG=== loadGraphs()");
-			console.log(result);
+			if(DEBUG_GRAPH) console.log("===DEBUG=== loadGraphs()");
+			if(DEBUG_GRAPH) console.log(result);
 
 			//populate dropdownlist
 			$.each(result, function(k, v){
@@ -49,8 +49,8 @@ function addGraph(name, xml)
 		data: {action : "addGraph", name: name, xml: xml},
 		dataType: "json",
 		success:function(result){
-			console.log("===DEBUG=== addGraph()");
-			console.log(result);
+			if(DEBUG_GRAPH) console.log("===DEBUG=== addGraph()");
+			if(DEBUG_GRAPH) console.log(result);
 			alert("Successfully added "+result.name+"!");
 			$("#graphList")
 				.append('<option value="'+result.gid+'">'+result.name+'</option>')
@@ -113,7 +113,7 @@ function deleteGraph()
 		success:function(result){
 			clearGraph();
 			alert("Successfully removed graph");
-			console.log(result);
+			if(DEBUG_GRAPH) console.log(result);
 			$("#graphList option[value="+gid+"]").remove();
 			loadGraph();
 		},
@@ -149,10 +149,10 @@ function getAvailableEthernets(cell)
 	var eths = [];
 	for (var i = 0; i < NUM_INTERFACES; i++) {
 		eths.push(i);
-	}console.log(eths);
+	}if(DEBUG_GRAPH) console.log(eths);
 	for (var j = 0; j < cell.getEdgeCount(); j++) {
 		var ethId = cell.getEdgeAt(j).value.ethernet;
-		console.log(ethId);
+		if(DEBUG_GRAPH) console.log(ethId);
 		for(var m=0; m<eths.length;m++)
 		{
 			if(eths[m] == ethId)
@@ -161,7 +161,7 @@ function getAvailableEthernets(cell)
 				break;
 			}
 		}
-		console.log(eths);
+		if(DEBUG_GRAPH) console.log(eths);
 	}
 	return eths;
 }

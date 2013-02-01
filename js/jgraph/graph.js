@@ -8,6 +8,7 @@ var GLOBAL_GRAPH = null;	//global instance of the graph
 var NUM_INTERFACES = 4;		//constant number of interfaces for non-switch cells
 
 var CELLS = [];				//tracks the list of cells on the graph
+var DEBUG_GRAPH = false;
 
 function main(container, toolbar, sidebar, status)
 {
@@ -142,10 +143,10 @@ function main(container, toolbar, sidebar, status)
 		model.cellRemoved = function(cell){
 			if(cell.isVertex())
 			{
-				console.log("***CELL REMOVED");
+				if(DEBUG_GRAPH) console.log("***CELL REMOVED");
 				CELLS.remove(CELLS.indexOf(cell.value.name));
-				console.log(CELLS);
-				console.log(cell);
+				if(DEBUG_GRAPH) console.log(CELLS);
+				if(DEBUG_GRAPH) console.log(cell);
 			}
 			else if (cell.isEdge())
 			{
@@ -159,11 +160,11 @@ function main(container, toolbar, sidebar, status)
 			if(cell.isVertex())
 			{
 				cell.value.name = getValidName(cell.value.name);
-				console.log("***Adding cell...");
+				if(DEBUG_GRAPH) console.log("***Adding cell...");
 				CELLS.push(cell.value.name);
-				console.log(cell);
-				console.log("***Cell added!");
-				console.log(CELLS);
+				if(DEBUG_GRAPH) console.log(cell);
+				if(DEBUG_GRAPH) console.log("***Cell added!");
+				if(DEBUG_GRAPH) console.log(CELLS);
 			}
 			else if(cell.isEdge())
 			{
@@ -185,9 +186,9 @@ function main(container, toolbar, sidebar, status)
 								"255.255.255.0",
 								"172.168.0.1"
 							));
-				console.log("***Adding edge...");
-				console.log(cell);
-				console.log("***Edge added!");
+				if(DEBUG_GRAPH) console.log("***Adding edge...");
+				if(DEBUG_GRAPH) console.log(cell);
+				if(DEBUG_GRAPH) console.log("***Edge added!");
 			}
 			return mxGraph.prototype.addCell.apply(this, arguments);
 
@@ -580,7 +581,7 @@ function showProperties(graph, cell){
 			var clone = null;
 			var type = typeField.value;
 
-			console.log(cell.value);
+			if(DEBUG_GRAPH) console.log(cell.value);
 			CELLS.remove(CELLS.indexOf(cell.value.name));
 
 			if(type == "switch")
@@ -595,7 +596,7 @@ function showProperties(graph, cell){
 				clone = new Internet(getValidName(nameField.value));
 
 			CELLS.push(clone.name);
-			console.log(CELLS);
+			if(DEBUG_GRAPH) console.log(CELLS);
 
 			graph.model.beginUpdate();
 			try{
@@ -632,7 +633,7 @@ function showProperties(graph, cell){
 
 		var okFunction = function(){
 			var clone = mxUtils.clone(cell.value);
-			console.log(ethernet.value);
+			if(DEBUG_GRAPH) console.log(ethernet.value);
 			clone = new Interface(ethernet.value,ipField.value,netmaskField.value,gatewayField.value);
 			graph.model.beginUpdate();
 			graph.model.setValue(cell, clone);
@@ -677,7 +678,7 @@ function isIconConnected(graph)
 //Console debugging: print all cells
 function debugPrintCells(graph)
 {
-	console.log("\n=====================================================\n"+
+	if(DEBUG_GRAPH) console.log("\n=====================================================\n"+
 				"======================DEBUGGING======================\n"+
 				"=====================================================");
 	//var isCell = true;
@@ -688,11 +689,11 @@ function debugPrintCells(graph)
 	for (var i = 0; i < root.getChildCount(); i++) {
 		cell = root.getChildAt(i);
 
-		console.log("===DEBUG=== Cell: "+cell.id);
-		console.log(cell);
-		console.log("Edge count: "+graph.getModel().getEdgeCount(cell));
+		if(DEBUG_GRAPH) console.log("===DEBUG=== Cell: "+cell.id);
+		if(DEBUG_GRAPH) console.log(cell);
+		if(DEBUG_GRAPH) console.log("Edge count: "+graph.getModel().getEdgeCount(cell));
 		if(cell.value !== null)
-			console.log("Type: "+ cell.value.type);
+			if(DEBUG_GRAPH) console.log("Type: "+ cell.value.type);
 
 	}
 }
