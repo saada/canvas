@@ -37,13 +37,21 @@
        	</script>
 
 		<div data-dojo-type="dijit/layout/BorderContainer" style="width: 100%; height: 100%">
-			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true,region:'top'">Top pane</div>
-			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true,region:'leading'">Leading pane</div>
-			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true,region:'center'">
-				<iframe src="graph.html" style="width: 100%; height: 100%" frameborder="0"></iframe>
+			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true,region:'top'">User Info</div>
+			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true,region:'leading'">Classes/Labs</div>
+			<div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="splitter:true,region:'center'">
+				<div data-dojo-type="dijit/layout/ContentPane" title="Lab 1">
+					<iframe src="graph.html" style="width: 100%; height: 100%" frameborder="0"></iframe>
+				</div>
+				<div data-dojo-type="dijit/layout/ContentPane" title="Lab 2">
+					<iframe src="graph.html" style="width: 100%; height: 100%" frameborder="0"></iframe>
+				</div>
+				<div data-dojo-type="dijit/layout/ContentPane" title="Lab 3">
+					<iframe src="graph.html" style="width: 100%; height: 100%" frameborder="0"></iframe>
+				</div>
+
 			</div>
-			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true,region:'trailing'">Trailing pane</div>
-			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true,region:'bottom'">Bottom pane</div>
+			<!-- <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true,region:'bottom'">Bottom pane</div> -->
 		</div>
 
 	</body>

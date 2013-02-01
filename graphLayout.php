@@ -13,7 +13,7 @@
 			$greeting .= 'Your session id is: <strong>'.$user->sid.'</strong><br>';
 			$greeting .= 'Your hostname is: <strong>'.$user->hostname.'</strong><br>';
 			$greeting .= 'Your account was created on: <strong>'.date('m/d/Y', $user->created).'</strong><br>';
-			
+
 			// Display user roles
 			$i=0;
 			$len = count($user->roles);
@@ -33,7 +33,7 @@
 	}
 
 	function showVLAB($width,$height){
-		echo '<iframe id="VLAB_iframe" src="canvas/vlab.html" '
+		echo '<iframe id="VLAB_iframe" src="canvas/vlab.php" '
 			.'width="'.$width.'" height="'.$height.'"></iframe>';
 	}
 
