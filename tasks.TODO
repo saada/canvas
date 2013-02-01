@@ -1,6 +1,6 @@
 TODO NOW:
  ☐ Implement a Dojo app
-   ☐ Set up layout
+   ✔ Set up layout @done (13-01-31 20:53)
    ☐ Set up widgets
    ☐ Set up templates
  ☐ Implement RESTful WebServices
@@ -8,6 +8,7 @@ TODO NOW:
 --- ✄ -----------------------
 FUTURE MODIFICATIONS:
  ☐ Incorporate zooming capability to each widget
+ ☐ Migrate jQuery graph code into dojo code if performance issues appear.
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
  ✔ Refactor canvas to set up vlab layout with widgets @done (13-01-18 18:01)

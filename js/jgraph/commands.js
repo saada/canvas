@@ -1,9 +1,9 @@
 //This is where the graph app starts up
-$(function() {
+(function() {
 	addCustomButtons();		// prepend custom buttons to toolabar
 	loadGraphs();			// load graph list from database
 	attachButtonEvents();	// the name is self explanatory
-});
+})();
 
 function addCustomButtons(){
 	$('#toolbarContainer')
